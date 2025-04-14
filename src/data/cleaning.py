@@ -1,34 +1,27 @@
 import pandas as pd
 
-def clean_data(df: pd.DataFrame) -> pd.DataFrame:
-    # Drop the first two rows and reset index
-    df.columns = df.iloc[1]
-    df = df[2:].reset_index(drop=True)
+def clean_data(df:pd.DataFrame, data_group:str=None):
+    # Remove the first row
+    df = df.iloc[1:].reset_index(drop=True)
+    # Make first row as headers
+    df.columns = df.iloc[0]
+    # Reset index
+    df = df[1:].reset_index(drop=True)
 
-    # Keep only specified columns
-    df = df[[  
-        "T_offset1", "T_offset2", "T_offset3", "T_offset4",
-        "T_FHBC1", "T_FHBC2", "T_FHBC3", "T_FHBC4",
-        "aveOralM", "T_atm"
-    ]]
+    # Change column types to float64
+    df[['T_FHBC1', 'T_FHBC2', 'T_FHBC3', 'T_FHBC4', 'aveOralM', 'T_atm']] = df[['T_FHBC1', 'T_FHBC2', 'T_FHBC3', 'T_FHBC4', 'aveOralM', 'T_atm']].astype('float64')
 
-    # Normalize the thermal readings
-    for i in range(1, 5):
-        # Deduct T_offset* values from T_FHBC* to correct for sensor bias or environmental drift
-        df[f'T_FHBC{i}'] = pd.to_numeric(df[f'T_FHBC{i}'], errors='coerce') - pd.to_numeric(df[f'T_offset{i}'], errors='coerce')
-        df.drop(columns=[f'T_offset{i}'], inplace=True)
+    # Calculate the average of T_FHBC1 to T_FHBC4
+    df['Tg'] = df[['T_FHBC1', 'T_FHBC2', 'T_FHBC3', 'T_FHBC4']].mean(axis=1)
 
-    # Average the values of all T_FHBC* and assign to a new column Tg
-    df['Tg'] = df[[f'T_FHBC{i}' for i in range(1, 5)]].astype(float).mean(axis=1)
-
-    # Drop all T_FHBC* columns
-    df.drop(columns=[f'T_FHBC{i}' for i in range(1, 5)], inplace=True)
+    # Keep specified columns
+    df = df[['Tg', 'T_atm', 'aveOralM']]
 
     # Rename columns
-    df.rename(columns={'aveOralM': 'Tc', 'T_atm': 'Ta'}, inplace=True)
+    df = df.rename(columns={'T_atm': 'Ta', 'aveOralM': 'Tc'})
 
     # Reorder columns
     return df[['Tg', 'Ta', 'Tc']]
 
-def save_clean_data_to_csv(df: pd.DataFrame, path: str):
-    df.to_csv(path, index=False)
+def save_clean_data_to_csv(clean_data: pd.DataFrame, path: str):
+    clean_data.to_csv(path, index=False)
