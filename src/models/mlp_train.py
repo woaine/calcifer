@@ -215,6 +215,6 @@ if __name__ == '__main__':
     feature = 'engineered' if opt.feature_engineered else 'non_engineered'
     preprocessing = 'preprocessed' if opt.preprocessed else 'non_processed'
     data_type = 'augmented' if opt.augmented else 'external'
-    dir_path = f"../../reports/logs/training/{scale}/{feature}/{preprocessing}/{data_type}"
+    dir_path = f"../../reports/results/training/{scale}/{feature}/{preprocessing}/{data_type}"
 
     grid_search(*data, hyperparameters, dir_path, opt.epochs, opt.scaler, opt.l2_alpha, opt.batch_normalization, opt.dropout, opt.optimizer, opt.resume)
