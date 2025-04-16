@@ -4,7 +4,6 @@ import json
 import yaml
 import random
 import argparse
-import logging
 import re
 import numpy as np
 import pandas as pd
@@ -14,7 +13,6 @@ from itertools import product
 
 from keras.api.models import Sequential
 from keras.api.layers import InputLayer, Dense, PReLU, Activation, BatchNormalization, Dropout
-from keras.api.optimizers import AdamW
 from keras.api.regularizers import L2
 from keras.api.metrics import RootMeanSquaredError, R2Score
 from keras.api.callbacks import ReduceLROnPlateau, EarlyStopping
@@ -40,7 +38,7 @@ def create_model(n_features, layers, activation, l2_alpha, batch_normalization, 
         if dropout:
             model.add(Dropout(dropout))
     model.add(Dense(1))
-    model.compile(optimizer=optimizer, loss="mse", metrics=["mae", RootMeanSquaredError()])
+    model.compile(optimizer=optimizer, loss="mse", metrics=["mae", RootMeanSquaredError(), R2Score()])
     
     return model
 
@@ -60,9 +58,9 @@ def train(X_train, X_test, y_train, y_test, model, epochs):
    
     return model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=epochs, verbose=2, callbacks=callbacks)
     
-def grid_search(X, y, hyperparameters_grid: dict, epochs: int, scaler: str, l2_alpha: float, batch_normalization: bool, dropout: float, optimizer: str, dir_name: str, resume_training: bool):
-    os.makedirs(f"../../reports/logs/training/history/{dir_name}", exist_ok=True)
-    hyperparameters_file = f"../../reports/logs/training/history/{dir_name}/hyperparameters.txt"
+def grid_search(X, y, hyperparameters_grid: dict, dir_path: str, epochs: int, scaler: str, l2_alpha: float, batch_normalization: bool, dropout: float, optimizer: str, resume_training: bool):
+    os.makedirs(dir_path, exist_ok=True)
+    hyperparameters_file = f"{dir_path}/hyperparameters.txt"
 
     if resume_training:
         hyperparameters_list = load_remaining_params(hyperparameters_file)
@@ -84,7 +82,7 @@ def grid_search(X, y, hyperparameters_grid: dict, epochs: int, scaler: str, l2_a
             result = train(X_train, X_test, y_train, y_test, model, epochs)
             fold_histories = process_results(result, fold_histories, hyperparameters, epochs, fold, scaler, y_scaler)
         duration = time.time() - start_time
-        save_results(hyperparameters, duration, fold_histories, dir_name)
+        save_results(hyperparameters, duration, fold_histories, dir_path)
         remove_trained_params(hyperparameters, hyperparameters_file)
 
         clear_session()
@@ -109,7 +107,7 @@ def process_results(result: dict, fold_histories: dict, hyperparameters: tuple, 
 
     return fold_histories
 
-def save_results(hyperparameters: tuple, duration: float, fold_histories: dict, dir_name: str):
+def save_results(hyperparameters: tuple, duration: float, fold_histories: dict, dir_path: str):
     def create_summary_df(layers: list, activation: str, batch_size: int, duration: float, fold_histories: dict, metrics: list):
         training_duration_df = pd.DataFrame({'layers': [layers], 'activation': [activation], 'batch_size': [batch_size], 'duration': [duration]})
         all_fold_df = pd.DataFrame(fold_histories)
@@ -140,7 +138,7 @@ def save_results(hyperparameters: tuple, duration: float, fold_histories: dict, 
 
     dfs = create_summary_df(layers, activation, batch_size, duration, fold_histories, metrics)
     for df, file_name in zip(dfs, file_names):
-        file_path = os.path.join("CalciferNet", "history", dir_name, file_name)
+        file_path = f"{dir_path}/{file_name}"
         df.to_csv(file_path, mode='a', header=not os.path.exists(file_path), index=False)
     
 def save_perm_params(hyperparameters_list, hyperparameters_file):
@@ -180,8 +178,13 @@ def load_hyperparameters(config_path: str):
             'batch_sizes': batch_sizes
         }
 
-def load_data(data_path: str, feature_engineered: bool):
-    data = pd.read_csv(f"../../data/processed/{data_path}")
+def load_data(augmented:bool, preprocessed: bool, feature_engineered: bool):
+    data_file = 'augmented_preprocessed.csv' if augmented and preprocessed else \
+                'data_augmented.csv' if augmented else \
+                'external_preprocessed.csv' if preprocessed else \
+                'dataset_external.csv'
+    
+    data = pd.read_csv(f"../../data/processed/{data_file}")
 
     if feature_engineered:
         data = create_features(data)
@@ -192,22 +195,26 @@ def load_data(data_path: str, feature_engineered: bool):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data', default='data_external.csv', type=str, required=True, help='Dataset filename')
     parser.add_argument('--config', type=str, default='model_config.yaml', required=True, help='Hyperparameters filename')
-    parser.add_argument('--epochs', type=int, default=300, required=True, help='Number of epochs to train a model')
-    parser.add_argument('--feature_engineered', type=bool, default=False, help='Apply feature-engineering to the dataset')
+    parser.add_argument('--augmented', type=bool, default=False, help='Augmented or non-augmented')
+    parser.add_argument('--preprocessed', type=bool, default=False, help='Preprocessed or non-processed')
+    parser.add_argument('--feature_engineered', type=bool, default=False, help='Feature-engineered or not')
     parser.add_argument('--scaler', type=str, default=None, help='Scaler to use')
+    parser.add_argument('--epochs', type=int, default=300, required=True, help='Number of epochs to train a model')
     parser.add_argument('--l2_alpha', type=float, default=0.01, help='Apply L2 regularizer')
     parser.add_argument('--batch_normalization', type=bool, default=False, help='Apply batch optimization to architecture')
     parser.add_argument('--dropout', type=float, default=0, help='Apply dropout rate to architecture')
     parser.add_argument('--optimizer', type=str, default='adam', required=True, help='Optimizer to use')
-    parser.add_argument('--name', type=str, default='training', required=True, help='Name of the training session')
     parser.add_argument('--resume', type=int, default=0, help='Resume most recent training')
     opt = parser.parse_args()
 
     hyperparameters = load_hyperparameters(opt.config)
-    data = load_data(opt.data, opt.feature_engineered)
+    data = load_data(opt.augmented, opt.preprocessed, opt.feature_engineered)
 
-    grid_search(*data, hyperparameters, opt.epochs, opt.scaler, opt.l2_alpha, opt.batch_normalization, opt.dropout, opt.optimizer, opt.name, opt.resume)
+    scale = 'standardized' if opt.scaler == 'standard' else 'normalized'
+    feature = 'engineered' if opt.feature_engineered else 'non_engineered'
+    preprocessing = 'preprocessed' if opt.preprocessed else 'non_processed'
+    data_type = 'augmented' if opt.augmented else 'external'
+    dir_path = f"../../reports/logs/training/{scale}/{feature}/{preprocessing}/{data_type}"
 
-
+    grid_search(*data, hyperparameters, dir_path, opt.epochs, opt.scaler, opt.l2_alpha, opt.batch_normalization, opt.dropout, opt.optimizer, opt.resume)
