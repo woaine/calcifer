@@ -7,6 +7,29 @@ from shutil import copyfile
 from itertools import product
 
 def clean_data(df:pd.DataFrame, data_group:str=None):
+    def clean_data(df: pd.DataFrame):
+        """
+        Cleans and processes a given DataFrame by performing several data transformation steps.
+        This function assumes the input DataFrame has specific columns related to temperature data.
+        It removes unnecessary rows, sets appropriate headers, converts data types, calculates
+        averages, and renames and reorders columns for further analysis.
+        Args:
+            df (pd.DataFrame): The input DataFrame containing raw data to be cleaned. It is expected
+                to have columns named 'T_FHBC1', 'T_FHBC2', 'T_FHBC3', 'T_FHBC4', 'aveOralM', and 'T_atm'.
+        Returns:
+            pd.DataFrame: A cleaned and processed DataFrame with the following columns:
+                - 'Tg': The average of 'T_FHBC1', 'T_FHBC2', 'T_FHBC3', and 'T_FHBC4'.
+                - 'Ta': The renamed column for 'T_atm'.
+                - 'Tc': The renamed column for 'aveOralM'.
+        Raises:
+            KeyError: If the required columns are not present in the input DataFrame.
+            ValueError: If the data in the required columns cannot be converted to float.
+        Notes:
+            - The function removes the first row of the DataFrame and uses the second row as headers.
+            - The input DataFrame is expected to have numeric data in the specified columns for
+              type conversion and calculations to succeed.
+        """
+
     # Remove the first row_data
     df = df.iloc[1:].reset_index(drop=True)
     # Make first row_data as headers
@@ -33,10 +56,65 @@ def save_clean_data_to_csv(clean_data: pd.DataFrame, path: str):
     clean_data.to_csv(path, index=False)
 
 def make_face_dataset_dir(target_path: str = '../data/processed/face_dataset'):
+    """
+    Creates a directory structure for a face dataset, organizing it into 
+    subdirectories for training, validation, and testing sets, each containing 
+    separate folders for images and labels.
+    Args:
+        target_path (str): The root directory where the dataset structure 
+            will be created. Defaults to '../data/processed/face_dataset'.
+    The resulting directory structure will look like this:
+        target_path/
+            ├── train/
+            │   ├── images/
+            │   └── labels/
+            ├── val/
+            │   ├── images/
+            │   └── labels/
+            └── test/
+                ├── images/
+                └── labels/
+    If the directories already exist, they will not be recreated, and no error 
+    will be raised.
+    """
+
     for (set, data) in product(['train', 'val', 'test'], ['images', 'labels']):
         os.makedirs(os.path.join(target_path, set, data), exist_ok = True)
 
 def XMLtoTXT(source_path: str = '../data/external/face_dataset', filename: str = 'facial_data', target_path: str = '../data/processed/face_dataset', move_images: bool = True):
+    """
+    Converts facial annotation data from XML format to YOLO-compatible TXT format and optionally moves associated images.
+    This function processes XML files containing facial annotation data, extracts bounding box and keypoint information, 
+    and converts it into a format compatible with YOLO object detection models. The converted data is saved as TXT files 
+    in the specified target directory. Additionally, the function can move the associated image files to the target directory.
+    Args:
+        source_path (str): The path to the source directory containing the XML files and images. 
+                           Default is '../data/external/face_dataset'.
+        filename (str): The base name of the XML files to process (without the set-specific prefix). 
+                        Default is 'facial_data'.
+        target_path (str): The path to the target directory where the processed TXT files and images will be saved. 
+                           Default is '../data/processed/face_dataset'.
+        move_images (bool): If True, the associated image files will be copied to the target directory. 
+                            Default is True.
+    Behavior:
+        - For each dataset split ('train', 'val', 'test'), the function:
+            1. Reads the corresponding XML file.
+            2. Extracts bounding box and keypoint information for each image.
+            3. Converts the extracted data into YOLO-compatible format.
+            4. Saves the converted data as TXT files in the 'labels' subdirectory of the target path.
+            5. Optionally moves the associated image files to the 'images' subdirectory of the target path.
+    Notes:
+        - Bounding box coordinates are normalized to the range [0, 1] relative to the image dimensions.
+        - Keypoints are included only for inner edges of the eyebrows.
+        - The function ensures that the target directory structure is created if it does not already exist.
+    Prints:
+        A success message for each dataset split indicating that the TXT files have been created and, 
+        if applicable, that the images have been moved.
+    Raises:
+        - FileNotFoundError: If the XML file or image file does not exist in the specified source path.
+        - ET.ParseError: If the XML file is malformed and cannot be parsed.
+    """
+    
     make_face_dataset_dir(target_path)
     
     for set in ['train', 'val', 'test']:
