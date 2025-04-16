@@ -1,3 +1,10 @@
 .env
 *.pyc
 __pycache__/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Jupyter runtime
+*.pid
+*.log
