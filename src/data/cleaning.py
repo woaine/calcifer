@@ -84,3 +84,5 @@ def XMLtoTXT(source_path: str = '../data/external/face_dataset', filename: str =
                     label += '\n'
 
                     txt_file.write(label)
+
+        print(f"TXT files for labels in the '{set}' set are successfully created.{' Images are successfully moved.' if move_images else ''}")
