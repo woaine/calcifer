@@ -89,18 +89,18 @@ def load_and_scale_data(augmented:bool, preprocessed: bool, feature_engineered: 
      
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--shape',  type=str, default='16',required=True, help='Number of neurons per layer')
-    parser.add_argument('--activation', type=str, default='relu', required=True, help='Activation function')
-    parser.add_argument('--batch_size', type=int, default=32, required=True, help='Batch size to process')
+    parser.add_argument('--shape',  type=str, required=True, help='Number of neurons per layer')
+    parser.add_argument('--activation', type=str, required=True, help='Activation function')
+    parser.add_argument('--batch_size', type=int, required=True, help='Batch size to process')
     parser.add_argument('--augmented', type=bool, default=False, help='Augmented or non-augmented')
     parser.add_argument('--preprocessed', type=bool, default=False, help='Preprocessed or non-processed')
     parser.add_argument('--feature_engineered', type=bool, default=False, help='Feature-engineered or not')
     parser.add_argument('--scaler', type=str, default=None, help='Scaler to use')
-    parser.add_argument('--epochs', type=int, default=300, required=True, help='Number of epochs to train a model')
+    parser.add_argument('--epochs', type=int, default=300, help='Number of epochs to train a model')
     parser.add_argument('--l2_alpha', type=float, default=0.01, help='Apply L2 regularizer')
     parser.add_argument('--batch_normalization', type=bool, default=False, help='Apply batch optimization to architecture')
     parser.add_argument('--dropout', type=float, default=0, help='Apply dropout rate to architecture')
-    parser.add_argument('--optimizer', type=str, default='adam', required=True, help='Optimizer to use')
+    parser.add_argument('--optimizer', type=str, default='adam', help='Optimizer to use')
     opt = parser.parse_args()
 
     scale = 'standardized' if opt.scaler == 'standard' else 'normalized'
