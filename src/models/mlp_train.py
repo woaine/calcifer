@@ -35,7 +35,7 @@ np.random.seed(SEED_VALUE)
 tf.random.set_seed(SEED_VALUE)
 
 def create_model(n_features, layers, activation, l2_alpha, batch_normalization, dropout, optimizer):
-    model = Sequential([InputLayer(input_shape=(n_features,))])
+    model = Sequential([InputLayer(shape=(n_features,))])
     for neurons in layers:
         model.add(Dense(neurons, kernel_initializer='he_uniform', kernel_regularizer=L2(l2_alpha) if l2_alpha else None))
         if batch_normalization:
@@ -68,13 +68,10 @@ def grid_search(X, y, hyperparameters_grid: dict, dir_path: str, epochs: int, sc
     os.makedirs(dir_path, exist_ok=True)
     hyperparameters_file = f"{dir_path}/hyperparameters.txt"
 
-    if resume_training:
-        hyperparameters_list = load_remaining_params(hyperparameters_file)
-    else:
-        hyperparameters_list = product(*hyperparameters_grid.values())
-        save_perm_params(hyperparameters_list, hyperparameters_file)
-
-    for hyperparameters in hyperparameters_list:  
+    if not resume_training:
+        save_hyperparameters(product(*hyperparameters_grid.values()), hyperparameters_file)
+    
+    for hyperparameters in load_remaining_params(hyperparameters_file):
         kf = KFold(n_splits=5, shuffle=True, random_state=SEED_VALUE)
         fold_histories = {}
         start_time = time.time()
@@ -84,7 +81,7 @@ def grid_search(X, y, hyperparameters_grid: dict, dir_path: str, epochs: int, sc
             y_train, y_test = y[train_idx], y[test_idx]
             if scaler:
                 X_train, X_test, y_train, y_test, y_scaler = scale_data(X_train, X_test, y_train, y_test, scaler)
-            model = create_model(X.shape[1], *hyperparameters, l2_alpha, batch_normalization, dropout, optimizer)
+            model = create_model(X.shape[1], hyperparameters[0], hyperparameters[1], l2_alpha, batch_normalization, dropout, optimizer)
             result = train(X_train, X_test, y_train, y_test, model, epochs)
             fold_histories = process_results(result, fold_histories, hyperparameters, epochs, fold, scaler, y_scaler)
         duration = time.time() - start_time
@@ -97,19 +94,19 @@ def grid_search(X, y, hyperparameters_grid: dict, dir_path: str, epochs: int, sc
 
 def process_results(result: dict, fold_histories: dict, hyperparameters: tuple, epochs: int, fold: int, scaler: str, y_scaler: object):
     scale_factor = y_scaler.scale_[0] if scaler == 'standard' else y_scaler.data_max_[0] - y_scaler.data_min_[0]
-    fold_history = {
-        'layers': [hyperparameters[0]] * epochs,
-        'activation': [hyperparameters[1]] * epochs,
-        'batch_size': [hyperparameters[2]] * epochs,
-        'fold': [fold] * epochs,
-        'epoch': list(range(1, epochs + 1))
-    }
+    fold_history = {k: [json.dumps(v)]*epochs if k == 'layers' else [v]*epochs for k, v in zip(['layers', 'activation', 'batch_size', 'fold'], [*hyperparameters, fold])} 
+    fold_history['epoch'] = list(range(1, epochs+1))
 
     metrics = ['loss', 'val_loss', 'mae', 'val_mae', 'root_mean_squared_error', 'val_root_mean_squared_error']
+    for k, v in result.history.items():
+        if k in metrics:
+            scale_adjustment = scale_factor**2 if 'loss' in k and scaler == 'minmax' else scale_factor
+            fold_history[k] = [val * scale_adjustment for val in v]
+        else:
+            fold_history[k] = v
+
     for k, v in fold_history.items():
-        fold_histories.setdefault(k, []).extend(
-            [val * (scale_factor**2 if 'loss' in k and scaler == 'minmax' else scale_factor) if scaler and k in metrics else v for val in v]
-        )
+        fold_histories.setdefault(k, []).extend(v)
 
     return fold_histories
 
@@ -147,7 +144,7 @@ def save_results(hyperparameters: tuple, duration: float, fold_histories: dict, 
         file_path = f"{dir_path}/{file_name}"
         df.to_csv(file_path, mode='a', header=not os.path.exists(file_path), index=False)
     
-def save_perm_params(hyperparameters_list, hyperparameters_file):
+def save_hyperparameters(hyperparameters_list, hyperparameters_file):
     with open(hyperparameters_file, "w") as f:
         for hyperparameters in hyperparameters_list:
             f.write(",".join([json.dumps(hyperparameters[0])] + list(map(str, hyperparameters[1:]))) + "\n")
@@ -165,9 +162,10 @@ def load_remaining_params(param_file: str) -> list:
 def remove_trained_params(trained_params, param_file):
     trained_params_str = ",".join([json.dumps(trained_params[0])] + list(map(str, trained_params[1:])))
 
-    with open(param_file, "w") as f:
+    with open(param_file, "r") as f:
         remaining_params = [line.strip() for line in f if line.strip() != trained_params_str]
-        f.write("\n".join(remaining_params))        
+    with open(param_file, "w") as f:
+        f.write("\n".join(remaining_params))       
         
 def load_hyperparameters(config_file: str):
     config_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../config', config_file))
