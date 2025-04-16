@@ -62,13 +62,13 @@ def train(X_train, X_test, y_train, y_test, model, epochs):
     
 def grid_search(X, y, hyperparameters_grid: dict, epochs: int, scaler: str, l2_alpha: float, batch_normalization: bool, dropout: float, optimizer: str, dir_name: str, resume_training: bool):
     os.makedirs(f"../../reports/logs/training/history/{dir_name}", exist_ok=True)
-    param_file = f"../../reports/logs/training/history/{dir_name}/hyperparameters.txt"
+    hyperparameters_file = f"../../reports/logs/training/history/{dir_name}/hyperparameters.txt"
 
     if resume_training:
-        hyperparameters_list = load_remaining_params(param_file)
+        hyperparameters_list = load_remaining_params(hyperparameters_file)
     else:
         hyperparameters_list = product(*hyperparameters_grid.values())
-        save_perm_params(hyperparameters_list, param_file)
+        save_perm_params(hyperparameters_list, hyperparameters_file)
 
     for hyperparameters in hyperparameters_list:  
         kf = KFold(n_splits=5, shuffle=True, random_state=SEED_VALUE)
@@ -85,7 +85,7 @@ def grid_search(X, y, hyperparameters_grid: dict, epochs: int, scaler: str, l2_a
             fold_histories = process_results(result, fold_histories, hyperparameters, epochs, fold, scaler, y_scaler)
         duration = time.time() - start_time
         save_results(hyperparameters, duration, fold_histories, dir_name)
-        remove_trained_params(hyperparameters, param_file)
+        remove_trained_params(hyperparameters, hyperparameters_file)
 
         clear_session()
     
