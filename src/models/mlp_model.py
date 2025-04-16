@@ -1,18 +1,21 @@
 import joblib
+import os
 
 from keras.api.models import load_model
 
 class CalciferNet:
-    def __init__(self, name: str, type: str, model_file: str, X_scaler_file: str, y_scaler_file: str):
+    def __init__(self, name: str, scale, feature, preprocessing, data_type):
         self.name = name
         
-        model_path = f"../../models/mlp/{type}/{model_file}"
+        dir_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../models/mlp/', scale, feature, preprocessing, data_type))
+        
+        model_path = os.path.join(dir_path, 'best_model.keras')
         self.model = self._load_model(model_path)
 
-        x_scaler_path = f"../../models/mlp/{type}/{X_scaler_file}"
+        x_scaler_path = os.path.join(dir_path, 'fs.pkl')
         self.feature_scaler = joblib.load(x_scaler_path)
 
-        y_scaler_path =  f"../../models/mlp/{type}/{y_scaler_file}"
+        y_scaler_path =  os.path.join(dir_path, 'ts.pkl')
         self.target_scaler = joblib.load(y_scaler_path)
 
     def _load_model(self, model_path: str):
