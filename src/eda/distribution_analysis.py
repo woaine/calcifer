@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from scipy import stats
 import matplotlib.pyplot as plt
 import seaborn as sns
 from statsmodels.graphics.gofplots import qqplot
@@ -98,6 +99,6 @@ def distribution_analysis(df: pd.DataFrame):
             print(f"  The distribution of {var} appears to be normal (p >= 0.05)")
     
     # Save the figure automatically to the specified directory
-    plt.savefig('../../reports/figures/distributions_of_each_variable.png', dpi=300, bbox_inches='tight')
+    plt.savefig('../reports/figures/distributions_of_each_variable.png', dpi=300, bbox_inches='tight')
 
     plt.show()
