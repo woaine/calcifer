@@ -17,11 +17,11 @@ if __name__ == '__main__':
     parser.add_argument('--weight-decay', type=float, default=None, help='Optimizer weight decay')
     opt = parser.parse_args()
 
-    current_dir = os.path.dirname(__file__)
-    config_dir = os.path.abspath(os.path.join(current_dir, '..', '..', 'config'))
+    config_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../models/yolo', opt.weights))
+    data_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../config', opt.data))
 
     params = {
-        'data': os.path.join(config_dir, opt.data),
+        'data': data_path,
         'epochs': opt.epochs,
         'batch': opt.batch,
         'imgsz': opt.imgsz,
@@ -35,5 +35,5 @@ if __name__ == '__main__':
     if opt.weight_decay:
         params['weight_decay'] = opt.weight_decay
 
-    model = YOLO(os.path.join(config_dir, opt.weights))
+    model = YOLO(config_path)
     model.train(**params)
