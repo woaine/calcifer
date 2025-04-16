@@ -37,7 +37,3 @@ if __name__ == '__main__':
 
     model = YOLO(os.path.join(config_dir, opt.weights))
     model.train(**params)
-
-    # e.g. python train.py --weights yolov8x.pt --epochs 240 --optimizer SGD --lrf 1e-5 --weight-decay 5e-3 2>&1 | tee -a ../../reports/yolo_training_results.txt
-    # note: running the script above requires running it from this directory
-    # running from the root: python src/detection/train.py --weights yolov8x.pt --epochs 240 --optimizer SGD --lrf 1e-5 --weight-decay 5e-3 2>&1 | tee -a reports/yolo_training_results.txt
