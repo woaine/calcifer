@@ -63,7 +63,8 @@ def load_and_scale_data(augmented:bool, preprocessed: bool, feature_engineered: 
                 'external_preprocessed.csv' if preprocessed else \
                 'dataset_external.csv'
     
-    data = pd.read_csv(f"../../data/processed/{data_file}")
+    data_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../data/processed', data_file))
+    data = pd.read_csv(data_path)
 
     if feature_engineered:
         data = create_features(data)
@@ -107,7 +108,7 @@ if __name__ == '__main__':
     feature = 'engineered' if opt.feature_engineered else 'non_engineered'
     preprocessing = 'preprocessed' if opt.preprocessed else 'non_processed'
     data_type = 'augmented' if opt.augmented else 'external'
-    dir_path = f"../../models/mlp/{scale}/{feature}/{preprocessing}/{data_type}"
+    dir_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../models/mlp/', scale, feature, preprocessing, data_type))
 
     x_scaler_path = f"{dir_path}/fs.pkl"
     y_scaler_path = f"{dir_path}/ts.pkl"
