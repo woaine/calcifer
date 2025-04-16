@@ -4,7 +4,7 @@
 
 1.**Download YOLO PT File**
 
-    Download the YOLO`.pt` file from this [LINK](https://docs.ultralytics.com/tasks/pose/#models "Ultralytics") and place it in the `src/models/yolo` folder.
+    Download the YOLO`.pt` file from this [LINK](https://docs.ultralytics.com/tasks/pose/#models "Ultralytics") and place it in the `models/yolo` folder.
 
 2.**Prepare `sftl54.yaml` File**
 
