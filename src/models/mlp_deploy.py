@@ -30,7 +30,7 @@ np.random.seed(SEED_VALUE)
 tf.random.set_seed(SEED_VALUE)
 
 def create_model(n_features, layers, activation, l2_alpha, batch_normalization, dropout, optimizer):
-    model = Sequential([InputLayer(input_shape=(n_features,))])
+    model = Sequential([InputLayer(shape=(n_features,))])
     for neurons in layers:
         model.add(Dense(neurons, kernel_initializer='he_uniform', kernel_regularizer=L2(l2_alpha) if l2_alpha else None))
         if batch_normalization:
@@ -57,11 +57,11 @@ def train(X, y, hyperparameters: tuple, l2_alpha: float, batch_normalization: bo
 
     clear_session()
 
-def load_and_scale_data(augmented:bool, preprocessed: bool, feature_engineered: bool, scaler: str, x_scaler_path: str, y_scaler_path: str):
+def load_and_scale_data(augmented:bool, preprocessed: bool, feature_engineered: bool, scaler: str):
     data_file = 'augmented_preprocessed.csv' if augmented and preprocessed else \
                 'data_augmented.csv' if augmented else \
                 'external_preprocessed.csv' if preprocessed else \
-                'dataset_external.csv'
+                'data_external.csv'
     
     data_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../data/processed', data_file))
     data = pd.read_csv(data_path)
@@ -110,12 +110,13 @@ if __name__ == '__main__':
     data_type = 'augmented' if opt.augmented else 'external'
     dir_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../models/mlp/', scale, feature, preprocessing, data_type))
 
-    x_scaler_path = f"{dir_path}/fs.pkl"
-    y_scaler_path = f"{dir_path}/ts.pkl"
-    model_save_path = f"{dir_path}/best_model.keras"
+    os.makedirs(dir_path, exist_ok=True)
+    x_scaler_path = os.path.join(dir_path, 'fs.pkl')
+    y_scaler_path = os.path.join(dir_path, 'ts.pkl')
+    model_save_path = os.path.join(dir_path, 'best_model.keras')
 
-    hyperparameters = (opt.shape.split(","), opt.activation, opt.batch_size)
-    data = load_and_scale_data(opt.augmented, opt.preprocessed, opt.feature_engineered)
+    hyperparameters = ([int(x.strip()) for x in opt.shape.split(',') if x.strip()], opt.activation, opt.batch_size)
+    data = load_and_scale_data(opt.augmented, opt.preprocessed, opt.feature_engineered, opt.scaler)
 
     print(f"\nTraining {scale}, {feature}, {preprocessing}, {data_type} model with config {hyperparameters}...\n")
-    train(*data, *hyperparameters, opt.l2_alpha, opt.batch_normalization, opt.dropout, opt.optimizer, model_save_path)
+    train(*data, hyperparameters, opt.l2_alpha, opt.batch_normalization, opt.dropout, opt.optimizer, model_save_path)
