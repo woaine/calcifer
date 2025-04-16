@@ -21,6 +21,12 @@ from keras.api.backend import clear_session
 from sklearn.model_selection import KFold
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
+import sys
+
+src_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../'))
+if src_root not in sys.path:
+    sys.path.append(src_root)
+    
 from features import create_features
 
 SEED_VALUE = 42
