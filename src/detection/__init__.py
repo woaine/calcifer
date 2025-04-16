@@ -1,1 +1,1 @@
-from yolo_model import YOLO11Face
+from detection.yolo_model import YOLO11Face
