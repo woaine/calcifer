@@ -169,8 +169,9 @@ def remove_trained_params(trained_params, param_file):
         remaining_params = [line.strip() for line in f if line.strip() != trained_params_str]
         f.write("\n".join(remaining_params))        
         
-def load_hyperparameters(config_path: str):
-    with open(f"../../config/{config_path}", 'r') as file:
+def load_hyperparameters(config_file: str):
+    config_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../config', config_file))
+    with open(config_path, 'r') as file:
         config = yaml.safe_load(file)
     
         param_grid = config.get('param_grid', {})
@@ -188,9 +189,10 @@ def load_data(augmented:bool, preprocessed: bool, feature_engineered: bool):
     data_file = 'augmented_preprocessed.csv' if augmented and preprocessed else \
                 'data_augmented.csv' if augmented else \
                 'external_preprocessed.csv' if preprocessed else \
-                'dataset_external.csv'
+                'data_external.csv'
     
-    data = pd.read_csv(f"../../data/processed/{data_file}")
+    data_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../data/processed', data_file))
+    data = pd.read_csv(data_path)
 
     if feature_engineered:
         data = create_features(data)
@@ -221,6 +223,7 @@ if __name__ == '__main__':
     feature = 'engineered' if opt.feature_engineered else 'non_engineered'
     preprocessing = 'preprocessed' if opt.preprocessed else 'non_processed'
     data_type = 'augmented' if opt.augmented else 'external'
-    dir_path = f"../../reports/results/training/{scale}/{feature}/{preprocessing}/{data_type}"
+    
+    dir_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../reports/results/training', scale, feature, preprocessing, data_type))
 
     grid_search(*data, hyperparameters, dir_path, opt.epochs, opt.scaler, opt.l2_alpha, opt.batch_normalization, opt.dropout, opt.optimizer, opt.resume)
