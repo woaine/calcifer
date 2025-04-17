@@ -184,10 +184,10 @@ def load_hyperparameters(config_file: str):
         }
 
 def load_data(augmented:bool, preprocessed: bool, feature_engineered: bool):
-    data_file = 'augmented_preprocessed.csv' if augmented and preprocessed else \
-                'data_augmented.csv' if augmented else \
-                'external_preprocessed.csv' if preprocessed else \
-                'data_external.csv'
+    data_file = 'preprocessed_augmented_data.csv' if augmented and preprocessed else \
+                'augmented_data.csv' if augmented else \
+                'preprocessed_external_data.csv' if preprocessed else \
+                'external_data.csv'
     
     data_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../data/processed', data_file))
     data = pd.read_csv(data_path)
