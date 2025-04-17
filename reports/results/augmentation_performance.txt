@@ -1,0 +1,49 @@
+ctgan_benchmark:                            min       max      mean    stddev  \
+sanity.data_mismatch.score             0.000000  0.000000  0.000000  0.000000   
+sanity.close_values_probability.score  0.674877  0.800493  0.753695  0.056058   
+stats.ks_test.marginal                 0.777709  0.818350  0.802135  0.017578   
+
+                                         median       iqr rounds errors  \
+sanity.data_mismatch.score             0.000000  0.000000      3      0   
+sanity.close_values_probability.score  0.785714  0.062808      3      0   
+stats.ks_test.marginal                 0.810345  0.020320      3      0   
+
+                                       durations direction  
+sanity.data_mismatch.score                  0.00  minimize  
+sanity.close_values_probability.score       0.00  maximize  
+stats.ks_test.marginal                      0.01  maximize  
+
+tvae_benchmark:                             min       max      mean    stddev  \
+sanity.data_mismatch.score             0.000000  0.000000  0.000000  0.000000   
+sanity.close_values_probability.score  0.591133  0.775862  0.694581  0.077027   
+stats.ks_test.marginal                 0.875616  0.906404  0.894704  0.013612   
+
+                                         median       iqr rounds errors  \
+sanity.data_mismatch.score             0.000000  0.000000      3      0   
+sanity.close_values_probability.score  0.716749  0.092365      3      0   
+stats.ks_test.marginal                 0.902094  0.015394      3      0   
+
+                                       durations direction  
+sanity.data_mismatch.score                  0.00  minimize  
+sanity.close_values_probability.score       0.00  maximize  
+stats.ks_test.marginal                      0.01  maximize  
+
+ddpm_benchmark:                             min       max      mean    stddev  \
+sanity.data_mismatch.score             0.000000  0.000000  0.000000  0.000000   
+sanity.close_values_probability.score  0.628079  0.741379  0.680624  0.046618   
+stats.ks_test.marginal                 0.945197  0.951970  0.947865  0.002946   
+
+                                         median       iqr rounds errors  \
+sanity.data_mismatch.score             0.000000  0.000000      3      0   
+sanity.close_values_probability.score  0.672414  0.056650      3      0   
+stats.ks_test.marginal                 0.946429  0.003387      3      0   
+
+                                       durations direction  
+sanity.data_mismatch.score                  0.00  minimize  
+sanity.close_values_probability.score       0.00  maximize  
+stats.ks_test.marginal                      0.01  maximize  
+
+	                                   ctgan_benchmark   tvae_benchmark	 ddpm_benchmark
+sanity.data_mismatch.score	             0.0 +/-   0.0	  0.0 +/-   0.0	  0.0 +/-   0.0
+sanity.close_values_probability.score  0.754 +/- 0.056	0.695 +/- 0.077 0.681 +/- 0.047
+stats.ks_test.marginal	               0.802 +/- 0.018	0.895 +/- 0.014	0.948 +/- 0.003
