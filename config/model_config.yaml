@@ -1,0 +1,13 @@
+param_grid:
+  layers:
+    - [16]
+    - [32]
+    - [64]
+    - [32, 16]
+    - [64, 32, 16]
+  activations:
+    - relu
+    - prelu
+  batch_sizes:
+    - 32
+    - 64
