@@ -19,12 +19,12 @@ def correlation_analysis(df: pd.DataFrame):
     Outputs:
     --------
     1. Prints the correlation matrix rounded to 3 decimal places.
-    2. Saves the following visualizations to the '../../reports/figures/' directory:
+    2. Saves the following visualizations to the '../reports/figures/' directory:
         - Correlation matrix heatmap as 'correlation_matrix.png'.
         - Scatter plot matrix as 'scatter_plot_matrix.png'.
         - Scatter plots with regression lines as 'scatter_plot_with_regression_lines.png'.
     3. Prints Pearson and Spearman correlation coefficients for 'Tg' and 'Ta' against 'Tc', 
-       along with their p-values and significance interpretation.
+        along with their p-values and significance interpretation.
     Visualizations:
     ---------------
     - Correlation Matrix: A heatmap showing the pairwise correlation coefficients between variables.
@@ -39,7 +39,7 @@ def correlation_analysis(df: pd.DataFrame):
     Notes:
     ------
     - The function assumes that the input DataFrame is preprocessed and contains no missing values in the relevant columns.
-    - The saved figures are stored in the relative path '../../reports/figures/'. Ensure the directory exists before running the function.
+    - The saved figures are stored in the relative path '../reports/figures/'. Ensure the directory exists before running the function.
     - The function uses matplotlib and seaborn for visualization, and scipy.stats for statistical analysis.
     Example:
     --------
@@ -68,7 +68,7 @@ def correlation_analysis(df: pd.DataFrame):
     plt.title('Correlation Matrix')
 
     # Save the figure automatically to the specified directory
-    plt.savefig('../../reports/figures/correlation_matrix.png', dpi=300, bbox_inches='tight')
+    plt.savefig('../reports/figures/correlation_matrix_cleaned.png', dpi=300, bbox_inches='tight')
 
     # Scatter plot matrix
     plt.figure(figsize=(15, 10))
@@ -76,7 +76,7 @@ def correlation_analysis(df: pd.DataFrame):
     scatter_matrix.fig.suptitle('Scatter Plot Matrix', y=1.02, fontsize=16)
 
     # Save the figure automatically to the specified directory
-    plt.savefig('../../reports/figures/scatter_plot_matrix.png', dpi=300, bbox_inches='tight')
+    plt.savefig('../reports/figures/scatter_plot_matrix_cleaned.png', dpi=300, bbox_inches='tight')
 
     # Specific scatter plots with regression lines
     fig, axes = plt.subplots(1, 2, figsize=(16, 6))
@@ -97,7 +97,7 @@ def correlation_analysis(df: pd.DataFrame):
     plt.tight_layout()
 
     # Save the figure automatically to the specified directory
-    plt.savefig('../../reports/figures/scatter_plot_with_regression_lines.png', dpi=300, bbox_inches='tight')  
+    plt.savefig('../reports/figures/scatter_plot_with_regression_lines_cleaned.png', dpi=300, bbox_inches='tight')  
 
     # Calculate and print statistical correlations
     print("\nPearson Correlation Coefficients:")
