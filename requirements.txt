@@ -1,3 +1,4 @@
+realesrgan-ncnn-py==2.0.0
 ultralytics==8.0.108
 opencv-python==4.11.0.86
 pandas==2.2.3
