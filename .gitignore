@@ -1,4 +1,21 @@
 .env
 *.pyc
 __pycache__/
+
 /.venv
+
+# YOLO Dataset Folders
+train/
+test/
+val/
+
+# Config Files
+*.yaml
+*.pt
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Jupyter runtime
+*.pid
+*.log
