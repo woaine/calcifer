@@ -1,0 +1,1 @@
+from detection.yolo_model import YOLO11Face
