@@ -10,7 +10,7 @@ from keras.api.models import Sequential
 from keras.api.layers import InputLayer, Dense, PReLU, BatchNormalization, Activation, Dropout
 from keras.api.regularizers import L2
 from keras.api.metrics import R2Score, RootMeanSquaredError
-from keras.api.callbacks import ReduceLROnPlateau, EarlyStopping
+from keras.api.callbacks import ReduceLROnPlateau
 from keras.api.backend import clear_session
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
@@ -52,8 +52,7 @@ def train(X_train, y_train, X_test, y_test, hyperparameters: tuple, epochs:int, 
     
     model = create_model(X_train.shape[1], layers, activation, l2_alpha, batch_normalization, dropout, optimizer)
     callbacks = [
-        ReduceLROnPlateau(monitor='loss', factor=0.5, patience=25, min_lr=1e-6),
-        EarlyStopping(monitor='loss', patience=epochs, restore_best_weights=True)
+        ReduceLROnPlateau(monitor='loss', factor=0.5, patience=25, min_lr=1e-6)
     ]
 
     result = model.fit(X_train, y_train, batch_size=batch_size, epochs=epochs, verbose=2, callbacks=callbacks, validation_data=(X_test, y_test))
