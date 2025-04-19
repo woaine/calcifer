@@ -1,0 +1,25 @@
+model,trial,normality,homoscedasticity
+Standardized Preprocessed External,1,True,True
+Standardized Preprocessed External,2,True,True
+Standardized Preprocessed External,3,True,True
+Standardized Preprocessed Augmented,1,True,True
+Standardized Preprocessed Augmented,2,True,True
+Standardized Preprocessed Augmented,3,True,True
+Standardized External,1,True,True
+Standardized External,2,True,True
+Standardized External,3,True,True
+Standardized Augmented,1,True,True
+Standardized Augmented,2,True,True
+Standardized Augmented,3,True,True
+Normalized Preprocessed External,1,True,True
+Normalized Preprocessed External,2,True,True
+Normalized Preprocessed External,3,True,True
+Normalized Preprocessed Augmented,1,True,True
+Normalized Preprocessed Augmented,2,True,True
+Normalized Preprocessed Augmented,3,True,True
+Normalized External,1,True,True
+Normalized External,2,True,True
+Normalized External,3,True,True
+Normalized Augmented,1,True,True
+Normalized Augmented,2,True,True
+Normalized Augmented,3,True,True

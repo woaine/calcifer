@@ -1,0 +1,304 @@
+{
+    "One-way ANOVA": {
+        "f_statistic": 2.190895205923489,
+        "p-value": 0.038721350388204116,
+        "significant": true,
+        "df_between": 7,
+        "df_within": 136,
+        "ss_between": 2.042141610285903,
+        "ss_within": 18.10944404617184,
+        "ms_between": 0.29173451575512904,
+        "ms_within": 0.13315767681008706
+    },
+    "Effect Sizes": {
+        "eta_squared": 0.10133900354543474,
+        "omega_squared": 0.05472279606292997,
+        "epsilon_squared": 0.055084393433802704,
+        "CI_lower": 0.03163205296198569,
+        "CI_upper": 0.1710459541288838
+    },
+    "Tukey's Honest Significant Difference": {
+        "comparisons": [
+            {
+                "model_1": "Normalized Augmented",
+                "model_2": "Normalized External",
+                "mean_diff": -0.13333278232150608,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.5078115714670509,
+                "conf_int_high": 0.24114600682403875,
+                "p-adj": 0.9566488972278352,
+                "reject": false
+            },
+            {
+                "model_1": "Normalized Augmented",
+                "model_2": "Normalized Preprocessed Augmented",
+                "mean_diff": 0.14444478352864581,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.23003400561689902,
+                "conf_int_high": 0.5189235726741906,
+                "p-adj": 0.9342495869103753,
+                "reject": false
+            },
+            {
+                "model_1": "Normalized Augmented",
+                "model_2": "Normalized Preprocessed External",
+                "mean_diff": -0.05000008477105035,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.42447887391659517,
+                "conf_int_high": 0.3244787043744945,
+                "p-adj": 0.9999043815385382,
+                "reject": false
+            },
+            {
+                "model_1": "Normalized Augmented",
+                "model_2": "Standardized Augmented",
+                "mean_diff": -0.29444291856553817,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.668921707711083,
+                "conf_int_high": 0.08003587058000666,
+                "p-adj": 0.23993907745378595,
+                "reject": false
+            },
+            {
+                "model_1": "Normalized Augmented",
+                "model_2": "Standardized External",
+                "mean_diff": 0.022222518920898438,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.3522562702246464,
+                "conf_int_high": 0.39670130806644327,
+                "p-adj": 0.9999996368543171,
+                "reject": false
+            },
+            {
+                "model_1": "Normalized Augmented",
+                "model_2": "Standardized Preprocessed Augmented",
+                "mean_diff": -0.07777765062120226,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.4522564397667471,
+                "conf_int_high": 0.29670113852434254,
+                "p-adj": 0.9982392485312149,
+                "reject": false
+            },
+            {
+                "model_1": "Normalized Augmented",
+                "model_2": "Standardized Preprocessed External",
+                "mean_diff": -0.08333333333333334,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.45781212247887815,
+                "conf_int_high": 0.2911454558122115,
+                "p-adj": 0.9972709841245184,
+                "reject": false
+            },
+            {
+                "model_1": "Normalized External",
+                "model_2": "Normalized Preprocessed Augmented",
+                "mean_diff": 0.2777775658501519,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.09670122329539294,
+                "conf_int_high": 0.6522563549956968,
+                "p-adj": 0.3102534321783068,
+                "reject": false
+            },
+            {
+                "model_1": "Normalized External",
+                "model_2": "Normalized Preprocessed External",
+                "mean_diff": 0.08333269755045573,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.2911460915950891,
+                "conf_int_high": 0.4578114866960006,
+                "p-adj": 0.9972711154415141,
+                "reject": false
+            },
+            {
+                "model_1": "Normalized External",
+                "model_2": "Standardized Augmented",
+                "mean_diff": -0.1611101362440321,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.5355889253895769,
+                "conf_int_high": 0.21336865290151275,
+                "p-adj": 0.8880241264882432,
+                "reject": false
+            },
+            {
+                "model_1": "Normalized External",
+                "model_2": "Standardized External",
+                "mean_diff": 0.15555530124240452,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.2189234879031403,
+                "conf_int_high": 0.5300340903879494,
+                "p-adj": 0.9051738474229039,
+                "reject": false
+            },
+            {
+                "model_1": "Normalized External",
+                "model_2": "Standardized Preprocessed Augmented",
+                "mean_diff": 0.05555513170030382,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.318923657445241,
+                "conf_int_high": 0.4300339208458487,
+                "p-adj": 0.999805991950142,
+                "reject": false
+            },
+            {
+                "model_1": "Normalized External",
+                "model_2": "Standardized Preprocessed External",
+                "mean_diff": 0.04999944898817274,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.3244793401573721,
+                "conf_int_high": 0.42447823813371754,
+                "p-adj": 0.9999043897384408,
+                "reject": false
+            },
+            {
+                "model_1": "Normalized Preprocessed Augmented",
+                "model_2": "Normalized Preprocessed External",
+                "mean_diff": -0.19444486829969618,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.568923657445241,
+                "conf_int_high": 0.18003392084584866,
+                "p-adj": 0.7504068270127795,
+                "reject": false
+            },
+            {
+                "model_1": "Normalized Preprocessed Augmented",
+                "model_2": "Standardized Augmented",
+                "mean_diff": -0.438887702094184,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.8133664912397288,
+                "conf_int_high": -0.06440891294863915,
+                "p-adj": 0.009983103898362211,
+                "reject": true
+            },
+            {
+                "model_1": "Normalized Preprocessed Augmented",
+                "model_2": "Standardized External",
+                "mean_diff": -0.12222226460774739,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.4967010537532922,
+                "conf_int_high": 0.25225652453779746,
+                "p-adj": 0.973029003696108,
+                "reject": false
+            },
+            {
+                "model_1": "Normalized Preprocessed Augmented",
+                "model_2": "Standardized Preprocessed Augmented",
+                "mean_diff": -0.2222224341498481,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.596701223295393,
+                "conf_int_high": 0.15225635499569673,
+                "p-adj": 0.6029852521943124,
+                "reject": false
+            },
+            {
+                "model_1": "Normalized Preprocessed Augmented",
+                "model_2": "Standardized Preprocessed External",
+                "mean_diff": -0.22777811686197919,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.602256906007524,
+                "conf_int_high": 0.14670067228356565,
+                "p-adj": 0.5719700448261977,
+                "reject": false
+            },
+            {
+                "model_1": "Normalized Preprocessed External",
+                "model_2": "Standardized Augmented",
+                "mean_diff": -0.24444283379448783,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.6189216229400327,
+                "conf_int_high": 0.130035955351057,
+                "p-adj": 0.4793233546357547,
+                "reject": false
+            },
+            {
+                "model_1": "Normalized Preprocessed External",
+                "model_2": "Standardized External",
+                "mean_diff": 0.07222260369194879,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.30225618545359606,
+                "conf_int_high": 0.4467013928374936,
+                "p-adj": 0.9989070275635176,
+                "reject": false
+            },
+            {
+                "model_1": "Normalized Preprocessed External",
+                "model_2": "Standardized Preprocessed Augmented",
+                "mean_diff": -0.02777756585015191,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.40225635499569673,
+                "conf_int_high": 0.34670122329539294,
+                "p-adj": 0.9999982932972724,
+                "reject": false
+            },
+            {
+                "model_1": "Normalized Preprocessed External",
+                "model_2": "Standardized Preprocessed External",
+                "mean_diff": -0.033333248562282994,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.4078120377078278,
+                "conf_int_high": 0.34114554058326185,
+                "p-adj": 0.9999939904702407,
+                "reject": false
+            },
+            {
+                "model_1": "Standardized Augmented",
+                "model_2": "Standardized External",
+                "mean_diff": 0.3166654374864366,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.057813351659108225,
+                "conf_int_high": 0.6911442266319814,
+                "p-adj": 0.16379188629100938,
+                "reject": false
+            },
+            {
+                "model_1": "Standardized Augmented",
+                "model_2": "Standardized Preprocessed Augmented",
+                "mean_diff": 0.2166652679443359,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.15781352120120892,
+                "conf_int_high": 0.5911440570898807,
+                "p-adj": 0.6337566985932975,
+                "reject": false
+            },
+            {
+                "model_1": "Standardized Augmented",
+                "model_2": "Standardized Preprocessed External",
+                "mean_diff": 0.21110958523220483,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.16336920391334,
+                "conf_int_high": 0.5855883743777497,
+                "p-adj": 0.6640723966413897,
+                "reject": false
+            },
+            {
+                "model_1": "Standardized External",
+                "model_2": "Standardized Preprocessed Augmented",
+                "mean_diff": -0.1000001695421007,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.47447895868764556,
+                "conf_int_high": 0.2744786196034441,
+                "p-adj": 0.991593135759995,
+                "reject": false
+            },
+            {
+                "model_1": "Standardized External",
+                "model_2": "Standardized Preprocessed External",
+                "mean_diff": -0.10555585225423178,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.4800346413997766,
+                "conf_int_high": 0.2689229368913131,
+                "p-adj": 0.9883921328650271,
+                "reject": false
+            },
+            {
+                "model_1": "Standardized Preprocessed Augmented",
+                "model_2": "Standardized Preprocessed External",
+                "mean_diff": -0.0055556827121310826,
+                "std_err": 0.08600958499883314,
+                "conf_int_low": -0.3800344718576759,
+                "conf_int_high": 0.36892310643341375,
+                "p-adj": 0.9999999999772964,
+                "reject": false
+            }
+        ]
+    }
+}
