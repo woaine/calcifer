@@ -2,10 +2,11 @@ import pandas as pd
 from scipy import stats
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
 
 # Analyze the correlations between variables in the preprocessed dataset
 # This function is similar to the above but assumes that the dataset has been preprocessed (outliers were removed).
-def correlation_analysis_preprocess(df: pd.DataFrame):
+def correlation_analysis_preprocess(df: pd.DataFrame, data_type):
     """
     Perform the same correlation analysis on the preprocessed dataset.
     """
@@ -22,8 +23,11 @@ def correlation_analysis_preprocess(df: pd.DataFrame):
     sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', vmin=-1, vmax=1)
     plt.title('Correlation Matrix on Preprocessed Dataset')
 
+    figure_path = f'../reports/figures/preprocessed/{data_type}'
+    os.makedirs(figure_path, exist_ok=True)
+
     # Save the figure automatically to the specified directory
-    plt.savefig('../reports/figures/correlation_matrix_preprocessed.png', dpi=300, bbox_inches='tight')
+    plt.savefig(f'{figure_path}/correlation_matrix_preprocessed.png', dpi=300, bbox_inches='tight')
 
     # Scatter plot matrix
     plt.figure(figsize=(15, 10))
@@ -31,7 +35,7 @@ def correlation_analysis_preprocess(df: pd.DataFrame):
     scatter_matrix.fig.suptitle('Scatter Plot Matrix on Preprocessed Dataset', y=1.02, fontsize=16)
 
     # Save the figure automatically to the specified directory
-    plt.savefig('../reports/figures/scatter_plot_matrix_preprocessed.png', dpi=300, bbox_inches='tight')
+    plt.savefig(f'{figure_path}/scatter_plot_matrix_preprocessed.png', dpi=300, bbox_inches='tight')
 
     # Specific scatter plots with regression lines
     fig, axes = plt.subplots(1, 2, figsize=(16, 6))
@@ -52,7 +56,7 @@ def correlation_analysis_preprocess(df: pd.DataFrame):
     plt.tight_layout()
 
     # Save the figure automatically to the specified directory
-    plt.savefig('../reports/figures/scatter_plot_with_regression_lines_preprocessed.png', dpi=300, bbox_inches='tight')  
+    plt.savefig(f'{figure_path}/scatter_plot_with_regression_lines_preprocessed.png', dpi=300, bbox_inches='tight')  
 
     # Calculate and print statistical correlations
     print("\nPearson Correlation Coefficients (Preprocessed):")
