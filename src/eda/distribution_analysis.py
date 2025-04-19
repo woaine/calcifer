@@ -3,7 +3,10 @@ import numpy as np
 from scipy import stats
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
 from statsmodels.graphics.gofplots import qqplot
+
+from mda import test_normality
 
 def dataframe_summary(df: pd.DataFrame) -> pd.DataFrame:
     """
@@ -36,7 +39,7 @@ def dataframe_summary(df: pd.DataFrame) -> pd.DataFrame:
         "Infinite Values": np.isinf(df).sum()
     })
 
-def distribution_analysis(df: pd.DataFrame):
+def distribution_analysis(df: pd.DataFrame, preprocessing, data_type):
     """
     Perform a comprehensive distribution analysis for specified variables in a DataFrame.
     This function generates histograms, Q-Q plots, and performs statistical tests 
@@ -91,14 +94,16 @@ def distribution_analysis(df: pd.DataFrame):
     for var in variables:
         # For large datasets, take a sample
         sample = df[var].sample(min(5000, len(df)))
-        stat, p = stats.shapiro(sample)
-        print(f"{var}: test statistic = {stat:.4f}, p-value = {p:.4e}")
-        if p < 0.05:
+        res = test_normality(sample)
+        print(res)
+        if not res['conclusion']:
             print(f"  The distribution of {var} is likely not normal (p < 0.05)")
         else:
             print(f"  The distribution of {var} appears to be normal (p >= 0.05)")
     
     # Save the figure automatically to the specified directory
-    plt.savefig('../reports/figures/distributions_of_each_variable.png', dpi=300, bbox_inches='tight')
+    figure_path = f'../reports/figures/eda/{preprocessing}/{data_type}'
+    os.makedirs(figure_path, exist_ok=True)
+    plt.savefig(f'{figure_path}/distributions_of_each_variable.png', dpi=300, bbox_inches='tight')
 
     plt.show()
