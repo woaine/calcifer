@@ -1,0 +1,20 @@
+{
+    "One-way ANOVA": {
+        "f_statistic": 1.6611741553838717,
+        "p-value": 0.12365558338331684,
+        "significant": false,
+        "df_between": 7,
+        "df_within": 136,
+        "ss_between": 1.8319196384819507,
+        "ss_within": 21.425556996716374,
+        "ms_between": 0.26170280549742153,
+        "ms_within": 0.15754086026997333
+    },
+    "Effect Sizes": {
+        "eta_squared": 0.07876691298958406,
+        "omega_squared": 0.031139571718588412,
+        "epsilon_squared": 0.03135050409934207,
+        "CI_lower": 0.01654455008134119,
+        "CI_upper": 0.14098927589782695
+    }
+}

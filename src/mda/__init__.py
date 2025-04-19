@@ -4,3 +4,7 @@ from mda.training_analysis import training_loss_r2
 from mda.training_analysis import model_metrics
 from mda.training_analysis import multi_model_metrics
 from mda.training_analysis import multi_model_facet
+from mda.model_manager import ModelManager
+from mda.stats_testing import test_normality
+from mda.stats_testing import test_homoscedasticity
+from mda.stats_testing import test_statistical_significance

@@ -1,5 +1,6 @@
 import joblib
 import os
+import pandas as pd
 
 from keras.api.models import load_model
 
@@ -25,3 +26,7 @@ class CalciferNet:
             return model
         except Exception as e:
             raise RuntimeError(f"Error loading model: {e}")
+        
+    def predict(self, input_data: pd.DataFrame):
+        input_data = self.feature_scaler.transform(input_data.to_numpy())
+        return self.target_scaler.inverse_transform(self.model.predict(input_data, verbose=False))
