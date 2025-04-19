@@ -68,7 +68,7 @@ def correlation_analysis(df: pd.DataFrame, data_type):
     sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', vmin=-1, vmax=1)
     plt.title('Correlation Matrix')
 
-    figure_path = f'../reports/figures/non_processed/{data_type}'
+    figure_path = f'../reports/figures/eda/non_processed/{data_type}'
     os.makedirs(figure_path, exist_ok=True)
 
     # Save the figure automatically to the specified directory

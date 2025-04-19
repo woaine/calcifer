@@ -23,7 +23,7 @@ def correlation_analysis_preprocess(df: pd.DataFrame, data_type):
     sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', vmin=-1, vmax=1)
     plt.title('Correlation Matrix on Preprocessed Dataset')
 
-    figure_path = f'../reports/figures/preprocessed/{data_type}'
+    figure_path = f'../reports/figures/eda/preprocessed/{data_type}'
     os.makedirs(figure_path, exist_ok=True)
 
     # Save the figure automatically to the specified directory

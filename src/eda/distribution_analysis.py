@@ -102,7 +102,7 @@ def distribution_analysis(df: pd.DataFrame, preprocessing, data_type):
             print(f"  The distribution of {var} appears to be normal (p >= 0.05)")
     
     # Save the figure automatically to the specified directory
-    figure_path = f'../reports/figures/{preprocessing}/{data_type}'
+    figure_path = f'../reports/figures/eda/{preprocessing}/{data_type}'
     os.makedirs(figure_path, exist_ok=True)
     plt.savefig(f'{figure_path}/distributions_of_each_variable.png', dpi=300, bbox_inches='tight')
 
