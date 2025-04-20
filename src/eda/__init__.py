@@ -3,3 +3,9 @@ from eda.distribution_analysis import distribution_analysis
 from eda.correlation_analysis import correlation_analysis
 from eda.correlation_analysis_preprocess import correlation_analysis_preprocess
 from eda.outlier_analysis import outlier_analysis
+from eda.distribution_analysis import basic_statistics
+from eda.distribution_analysis import distribution_plots
+from eda.distribution_analysis import kolmogorov_smirnov_test
+from eda.distribution_analysis import permutation_test
+from eda.distribution_analysis import dimensionality_reduction_visualization
+from eda.distribution_analysis import mmd_test
