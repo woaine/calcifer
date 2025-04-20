@@ -5,8 +5,10 @@
         "significant": true,
         "df_between": 7,
         "df_within": 136,
+        "total_df": 143,
         "ss_between": 2.608802374832218,
         "ss_within": 22.839444893843503,
+        "total_ss": 25.448247268675722,
         "ms_between": 0.3726860535474597,
         "ms_within": 0.16793709480767283
     },
@@ -14,8 +16,12 @@
         "eta_squared": 0.10251402964177403,
         "omega_squared": 0.05595067129598102,
         "epsilon_squared": 0.0563198988145124,
-        "CI_lower": 0.03244996800490421,
-        "CI_upper": 0.17257809127864385
+        "eta_CI_lower": 0.03244996800490421,
+        "eta_CI_upper": 0.17257809127864385,
+        "omega_CI_lower": 0.0028634715373236155,
+        "omega_CI_upper": 0.10903787105463841,
+        "epsilon_CI_lower": 0.0030682382839717845,
+        "epsilon_CI_upper": 0.10957155934505303
     },
     "Tukey's Honest Significant Difference": {
         "comparisons": [

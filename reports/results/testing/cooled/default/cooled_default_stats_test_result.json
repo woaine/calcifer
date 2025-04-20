@@ -4,17 +4,7 @@
         "chi2": 114.53713892709762,
         "df": 7,
         "asymp_sig": 1.0491246869422466e-21,
-        "significant": true,
-        "ranks": [
-            3.7777777777777777,
-            3.1666666666666665,
-            2.8333333333333335,
-            3.0,
-            5.0,
-            5.111111111111111,
-            6.277777777777778,
-            6.833333333333333
-        ]
+        "significant": true
     },
     "Nemenyi Test": {
         "summary": {
@@ -28,6 +18,16 @@
                 "Normalized External",
                 "Normalized Augmented"
             ],
+            "size": [
+                18,
+                18,
+                18,
+                18,
+                18,
+                18,
+                18,
+                18
+            ],
             "r_sum": [
                 68,
                 57,
@@ -38,7 +38,6 @@
                 113,
                 123
             ],
-            "size": 18,
             "r_mean": [
                 3.7777777777777777,
                 3.1666666666666665,
@@ -48,345 +47,204 @@
                 5.111111111111111,
                 6.277777777777778,
                 6.833333333333333
-            ],
-            "q_crit": 4.286284053731788
+            ]
         },
         "comparisons": [
             {
                 "model_1": "Standardized Preprocessed External",
                 "model_2": "Standardized Preprocessed Augmented",
                 "r_mean_diff": 0.6111111111111112,
-                "std_error": 0.816496580927726,
-                "q_stat": 0.7484551991837489,
                 "p-value": 1.103103878763445e-05,
-                "r_crit": 3.4997362747570384,
-                "p_significant": true,
-                "q_significant": false,
-                "r_significant": false
+                "significant": true
             },
             {
                 "model_1": "Standardized Preprocessed External",
                 "model_2": "Standardized External",
                 "r_mean_diff": 0.9444444444444442,
-                "std_error": 0.816496580927726,
-                "q_stat": 1.1567034896476116,
                 "p-value": 0.0015361079941245137,
-                "r_crit": 3.4997362747570384,
-                "p_significant": true,
-                "q_significant": false,
-                "r_significant": false
+                "significant": true
             },
             {
                 "model_1": "Standardized Preprocessed External",
                 "model_2": "Standardized Augmented",
                 "r_mean_diff": 0.7777777777777777,
-                "std_error": 0.816496580927726,
-                "q_stat": 0.9525793444156803,
                 "p-value": 2.8540915186781035e-09,
-                "r_crit": 3.4997362747570384,
-                "p_significant": true,
-                "q_significant": false,
-                "r_significant": false
+                "significant": true
             },
             {
                 "model_1": "Standardized Preprocessed External",
                 "model_2": "Normalized Preprocessed External",
                 "r_mean_diff": 1.2222222222222223,
-                "std_error": 0.816496580927726,
-                "q_stat": 1.4969103983674978,
                 "p-value": 0.36549896946182703,
-                "r_crit": 3.4997362747570384,
-                "p_significant": false,
-                "q_significant": false,
-                "r_significant": false
+                "significant": false
             },
             {
                 "model_1": "Standardized Preprocessed External",
                 "model_2": "Normalized Preprocessed Augmented",
                 "r_mean_diff": 1.333333333333333,
-                "std_error": 0.816496580927726,
-                "q_stat": 1.6329931618554516,
                 "p-value": 0.6866811920704772,
-                "r_crit": 3.4997362747570384,
-                "p_significant": false,
-                "q_significant": false,
-                "r_significant": false
+                "significant": false
             },
             {
                 "model_1": "Standardized Preprocessed External",
                 "model_2": "Normalized External",
                 "r_mean_diff": 2.5,
-                "std_error": 0.816496580927726,
-                "q_stat": 3.0618621784789726,
                 "p-value": 0.999999994107853,
-                "r_crit": 3.4997362747570384,
-                "p_significant": false,
-                "q_significant": false,
-                "r_significant": false
+                "significant": false
             },
             {
                 "model_1": "Standardized Preprocessed External",
                 "model_2": "Normalized Augmented",
                 "r_mean_diff": 3.0555555555555554,
-                "std_error": 0.816496580927726,
-                "q_stat": 3.742275995918744,
                 "p-value": 0.4537827433847297,
-                "r_crit": 3.4997362747570384,
-                "p_significant": false,
-                "q_significant": false,
-                "r_significant": false
+                "significant": false
             },
             {
                 "model_1": "Standardized Preprocessed Augmented",
                 "model_2": "Standardized External",
                 "r_mean_diff": 0.33333333333333304,
-                "std_error": 0.816496580927726,
-                "q_stat": 0.40824829046386263,
                 "p-value": 0.965813952149541,
-                "r_crit": 3.4997362747570384,
-                "p_significant": false,
-                "q_significant": false,
-                "r_significant": false
+                "significant": false
             },
             {
                 "model_1": "Standardized Preprocessed Augmented",
                 "model_2": "Standardized Augmented",
                 "r_mean_diff": 0.16666666666666652,
-                "std_error": 0.816496580927726,
-                "q_stat": 0.20412414523193131,
                 "p-value": 0.8600023809294954,
-                "r_crit": 3.4997362747570384,
-                "p_significant": false,
-                "q_significant": false,
-                "r_significant": false
+                "significant": false
             },
             {
                 "model_1": "Standardized Preprocessed Augmented",
                 "model_2": "Normalized Preprocessed External",
                 "r_mean_diff": 1.8333333333333335,
-                "std_error": 0.816496580927726,
-                "q_stat": 2.2453655975512468,
                 "p-value": 0.07420283003639727,
-                "r_crit": 3.4997362747570384,
-                "p_significant": false,
-                "q_significant": false,
-                "r_significant": false
+                "significant": false
             },
             {
                 "model_1": "Standardized Preprocessed Augmented",
                 "model_2": "Normalized Preprocessed Augmented",
                 "r_mean_diff": 1.9444444444444442,
-                "std_error": 0.816496580927726,
-                "q_stat": 2.3814483610392005,
                 "p-value": 3.6015024296176534e-10,
-                "r_crit": 3.4997362747570384,
-                "p_significant": true,
-                "q_significant": false,
-                "r_significant": false
+                "significant": true
             },
             {
                 "model_1": "Standardized Preprocessed Augmented",
                 "model_2": "Normalized External",
                 "r_mean_diff": 3.111111111111111,
-                "std_error": 0.816496580927726,
-                "q_stat": 3.8103173776627215,
                 "p-value": 6.436482837379742e-06,
-                "r_crit": 3.4997362747570384,
-                "p_significant": true,
-                "q_significant": false,
-                "r_significant": false
+                "significant": true
             },
             {
                 "model_1": "Standardized Preprocessed Augmented",
                 "model_2": "Normalized Augmented",
                 "r_mean_diff": 3.6666666666666665,
-                "std_error": 0.816496580927726,
-                "q_stat": 4.490731195102493,
                 "p-value": 0.05044668816916409,
-                "r_crit": 3.4997362747570384,
-                "p_significant": false,
-                "q_significant": true,
-                "r_significant": true
+                "significant": false
             },
             {
                 "model_1": "Standardized External",
                 "model_2": "Standardized Augmented",
                 "r_mean_diff": 0.16666666666666652,
-                "std_error": 0.816496580927726,
-                "q_stat": 0.20412414523193131,
                 "p-value": 0.21760830217270677,
-                "r_crit": 3.4997362747570384,
-                "p_significant": false,
-                "q_significant": false,
-                "r_significant": false
+                "significant": false
             },
             {
                 "model_1": "Standardized External",
                 "model_2": "Normalized Preprocessed External",
                 "r_mean_diff": 2.1666666666666665,
-                "std_error": 0.816496580927726,
-                "q_stat": 2.6536138880151094,
                 "p-value": 0.5945122655458823,
-                "r_crit": 3.4997362747570384,
-                "p_significant": false,
-                "q_significant": false,
-                "r_significant": false
+                "significant": false
             },
             {
                 "model_1": "Standardized External",
                 "model_2": "Normalized Preprocessed Augmented",
                 "r_mean_diff": 2.2777777777777772,
-                "std_error": 0.816496580927726,
-                "q_stat": 2.7896966515030632,
                 "p-value": 3.0502966830159295e-07,
-                "r_crit": 3.4997362747570384,
-                "p_significant": true,
-                "q_significant": false,
-                "r_significant": false
+                "significant": true
             },
             {
                 "model_1": "Standardized External",
                 "model_2": "Normalized External",
                 "r_mean_diff": 3.444444444444444,
-                "std_error": 0.816496580927726,
-                "q_stat": 4.218565668126584,
                 "p-value": 0.0010033344790144616,
-                "r_crit": 3.4997362747570384,
-                "p_significant": true,
-                "q_significant": false,
-                "r_significant": false
+                "significant": true
             },
             {
                 "model_1": "Standardized External",
                 "model_2": "Normalized Augmented",
                 "r_mean_diff": 3.9999999999999996,
-                "std_error": 0.816496580927726,
-                "q_stat": 4.898979485566356,
                 "p-value": 0.500153083436953,
-                "r_crit": 3.4997362747570384,
-                "p_significant": false,
-                "q_significant": true,
-                "r_significant": true
+                "significant": false
             },
             {
                 "model_1": "Standardized Augmented",
                 "model_2": "Normalized Preprocessed External",
                 "r_mean_diff": 2.0,
-                "std_error": 0.816496580927726,
-                "q_stat": 2.449489742783178,
                 "p-value": 0.0004810107942223585,
-                "r_crit": 3.4997362747570384,
-                "p_significant": true,
-                "q_significant": false,
-                "r_significant": false
+                "significant": true
             },
             {
                 "model_1": "Standardized Augmented",
                 "model_2": "Normalized Preprocessed Augmented",
                 "r_mean_diff": 2.1111111111111107,
-                "std_error": 0.816496580927726,
-                "q_stat": 2.585572506271132,
                 "p-value": 9.103828801926284e-15,
-                "r_crit": 3.4997362747570384,
-                "p_significant": true,
-                "q_significant": false,
-                "r_significant": false
+                "significant": true
             },
             {
                 "model_1": "Standardized Augmented",
                 "model_2": "Normalized External",
                 "r_mean_diff": 3.2777777777777777,
-                "std_error": 0.816496580927726,
-                "q_stat": 4.014441522894653,
                 "p-value": 1.446281205907951e-09,
-                "r_crit": 3.4997362747570384,
-                "p_significant": true,
-                "q_significant": false,
-                "r_significant": false
+                "significant": true
             },
             {
                 "model_1": "Standardized Augmented",
                 "model_2": "Normalized Augmented",
                 "r_mean_diff": 3.833333333333333,
-                "std_error": 0.816496580927726,
-                "q_stat": 4.694855340334424,
                 "p-value": 0.0002612040517004921,
-                "r_crit": 3.4997362747570384,
-                "p_significant": true,
-                "q_significant": true,
-                "r_significant": true
+                "significant": true
             },
             {
                 "model_1": "Normalized Preprocessed External",
                 "model_2": "Normalized Preprocessed Augmented",
                 "r_mean_diff": 0.11111111111111072,
-                "std_error": 0.816496580927726,
-                "q_stat": 0.13608276348795387,
                 "p-value": 0.0026620871208692387,
-                "r_crit": 3.4997362747570384,
-                "p_significant": true,
-                "q_significant": false,
-                "r_significant": false
+                "significant": true
             },
             {
                 "model_1": "Normalized Preprocessed External",
                 "model_2": "Normalized External",
                 "r_mean_diff": 1.2777777777777777,
-                "std_error": 0.816496580927726,
-                "q_stat": 1.5649517801114747,
                 "p-value": 0.30493131354176095,
-                "r_crit": 3.4997362747570384,
-                "p_significant": false,
-                "q_significant": false,
-                "r_significant": false
+                "significant": false
             },
             {
                 "model_1": "Normalized Preprocessed External",
                 "model_2": "Normalized Augmented",
                 "r_mean_diff": 1.833333333333333,
-                "std_error": 0.816496580927726,
-                "q_stat": 2.2453655975512463,
                 "p-value": 0.9999999561184926,
-                "r_crit": 3.4997362747570384,
-                "p_significant": false,
-                "q_significant": false,
-                "r_significant": false
+                "significant": false
             },
             {
                 "model_1": "Normalized Preprocessed Augmented",
                 "model_2": "Normalized External",
                 "r_mean_diff": 1.166666666666667,
-                "std_error": 0.816496580927726,
-                "q_stat": 1.428869016623521,
                 "p-value": 0.7511754422349018,
-                "r_crit": 3.4997362747570384,
-                "p_significant": false,
-                "q_significant": false,
-                "r_significant": false
+                "significant": false
             },
             {
                 "model_1": "Normalized Preprocessed Augmented",
                 "model_2": "Normalized Augmented",
                 "r_mean_diff": 1.7222222222222223,
-                "std_error": 0.816496580927726,
-                "q_stat": 2.1092828340632925,
                 "p-value": 0.00451762903398778,
-                "r_crit": 3.4997362747570384,
-                "p_significant": true,
-                "q_significant": false,
-                "r_significant": false
+                "significant": true
             },
             {
                 "model_1": "Normalized External",
                 "model_2": "Normalized Augmented",
                 "r_mean_diff": 0.5555555555555554,
-                "std_error": 0.816496580927726,
-                "q_stat": 0.6804138174397715,
                 "p-value": 0.3868607783069812,
-                "r_crit": 3.4997362747570384,
-                "p_significant": false,
-                "q_significant": false,
-                "r_significant": false
+                "significant": false
             }
         ]
     }

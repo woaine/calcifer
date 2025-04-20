@@ -5,8 +5,10 @@
         "significant": false,
         "df_between": 7,
         "df_within": 136,
+        "total_df": 143,
         "ss_between": 1.8319196384819507,
         "ss_within": 21.425556996716374,
+        "total_ss": 23.257476635198323,
         "ms_between": 0.26170280549742153,
         "ms_within": 0.15754086026997333
     },
@@ -14,7 +16,11 @@
         "eta_squared": 0.07876691298958406,
         "omega_squared": 0.031139571718588412,
         "epsilon_squared": 0.03135050409934207,
-        "CI_lower": 0.01654455008134119,
-        "CI_upper": 0.14098927589782695
+        "eta_CI_lower": 0.01654455008134119,
+        "eta_CI_upper": 0.14098927589782695,
+        "omega_CI_lower": 0,
+        "omega_CI_upper": 0.07126103369456634,
+        "epsilon_CI_lower": 0,
+        "epsilon_CI_upper": 0.07160324110246996
     }
 }

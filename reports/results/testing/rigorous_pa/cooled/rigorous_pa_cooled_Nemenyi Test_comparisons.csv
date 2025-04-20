@@ -1,0 +1,29 @@
+model_1,model_2,r_mean_diff,p-value,significant
+Standardized Preprocessed External,Standardized Preprocessed Augmented,1.2777777777777777,0.9999522111535677,False
+Standardized Preprocessed External,Standardized External,2.4444444444444446,0.012194544938358365,True
+Standardized Preprocessed External,Standardized Augmented,1.4444444444444442,0.019377107832146745,True
+Standardized Preprocessed External,Normalized Preprocessed External,3.3888888888888884,0.8889062174545482,False
+Standardized Preprocessed External,Normalized Preprocessed Augmented,1.5555555555555554,2.2256282098176428e-05,True
+Standardized Preprocessed External,Normalized External,2.333333333333333,0.6641386861776493,False
+Standardized Preprocessed External,Normalized Augmented,4.0,0.8094624372219109,False
+Standardized Preprocessed Augmented,Standardized External,1.166666666666667,0.04121233690212034,True
+Standardized Preprocessed Augmented,Standardized Augmented,0.16666666666666652,0.005139097791762248,True
+Standardized Preprocessed Augmented,Normalized Preprocessed External,2.1111111111111107,0.9807238886849354,False
+Standardized Preprocessed Augmented,Normalized Preprocessed Augmented,0.2777777777777777,0.00013908424372932604,True
+Standardized Preprocessed Augmented,Normalized External,1.0555555555555554,0.4087324355273029,False
+Standardized Preprocessed Augmented,Normalized Augmented,2.7222222222222223,0.9520676499810938,False
+Standardized External,Standardized Augmented,1.0000000000000004,2.845289559516573e-10,True
+Standardized External,Normalized Preprocessed External,0.9444444444444438,0.3868607783069812,False
+Standardized External,Normalized Preprocessed Augmented,0.8888888888888893,0.8272294145798226,False
+Standardized External,Normalized External,0.1111111111111116,5.36594942590618e-06,True
+Standardized External,Normalized Augmented,1.5555555555555554,0.500153083436953,False
+Standardized Augmented,Normalized Preprocessed External,1.9444444444444442,8.55993137702793e-05,True
+Standardized Augmented,Normalized Preprocessed Augmented,0.11111111111111116,3.885780586188048e-15,True
+Standardized Augmented,Normalized External,0.8888888888888888,0.7511754422349018,False
+Standardized Augmented,Normalized Augmented,2.555555555555556,3.7213962836402104e-05,True
+Normalized Preprocessed External,Normalized Preprocessed Augmented,1.833333333333333,0.0075040450065601005,True
+Normalized Preprocessed External,Normalized External,1.0555555555555554,0.04563102360850679,True
+Normalized Preprocessed External,Normalized Augmented,0.6111111111111116,0.999999792337488,False
+Normalized Preprocessed Augmented,Normalized External,0.7777777777777777,7.254228329145462e-10,True
+Normalized Preprocessed Augmented,Normalized Augmented,2.4444444444444446,0.013720493597586647,True
+Normalized External,Normalized Augmented,1.666666666666667,0.027013662274960826,True
