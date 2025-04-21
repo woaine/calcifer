@@ -8,6 +8,7 @@ from statsmodels.stats.diagnostic import het_breuschpagan, het_white, het_goldfe
 from statsmodels.stats.multicomp import pairwise_tukeyhsd
 from scipy.stats import friedmanchisquare
 import scikit_posthocs as sp
+from scipy.stats import fligner
 
 import warnings
 warnings.filterwarnings('ignore')
@@ -99,6 +100,45 @@ def test_homoscedasticity(predictors, residuals, alpha=0.05):
         results['conclusion'] = None  # Not enough valid tests
     
     return results
+
+def fligner_killeen_test(df, model_params):
+    """
+    Perform Fligner-Killeen test to identify epochs with significantly different variances.
+    Only record epoch pairs with significant differences (p-value < 0.05).
+    """
+    # Get unique models
+    models = df[model_params].drop_duplicates()
+    
+    results = []
+    
+    # For each model
+    for _, model in models.iterrows():
+        model_dict = model.to_dict()
+        
+        # Filter data for this model
+        model_data = df.copy()
+        for param, value in model_dict.items():
+            model_data = model_data[model_data[param] == value]
+        
+        # Get unique epochs for this model
+        epochs = model_data['epoch'].unique()
+
+        # Perform Fligner-Killeen test
+        stat, p_value = fligner(*[model_data[model_data['epoch'] == epoch]['val_loss'].values for epoch in epochs])
+        
+        # Store results
+        result = {
+            **model_dict,
+            'df': 4,
+            'statistic': stat,
+            'p_value': p_value
+        }
+        results.append(result)
+        
+    # Convert to dataframe
+    results_df = pd.DataFrame(results)
+    
+    return results_df
 
 def test_statistical_significance(input, alpha=0.05):
     # Extract data for analysis
