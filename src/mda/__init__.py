@@ -8,3 +8,5 @@ from mda.model_manager import ModelManager
 from mda.stats_testing import test_normality
 from mda.stats_testing import test_homoscedasticity
 from mda.stats_testing import test_statistical_significance
+from mda.stats_testing import process_stats_files
+from mda.model_analyzer import ModelPerformanceAnalyzer
