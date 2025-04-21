@@ -2,11 +2,14 @@ import numpy as np
 import pandas as pd
 import json
 import os
-
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy import stats
+from statsmodels.nonparametric.smoothers_lowess import lowess
 from sklearn.metrics import mean_squared_error, mean_absolute_error, root_mean_squared_error, r2_score
 
 from models import CalciferNet
-from mda.stats_testing import test_normality, test_homoscedasticity, test_statistical_significance
+from mda.stats_testing import test_homoscedasticity, test_statistical_significance
 
 class NumpyEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -225,12 +228,6 @@ class ModelManager:
         Returns:
             tuple: (metrics_df, error_stats_df) - DataFrames with comparison metrics and error statistics
         """
-        import pandas as pd
-        import numpy as np
-        import matplotlib.pyplot as plt
-        import seaborn as sns
-        from scipy import stats
-        from statsmodels.nonparametric.smoothers_lowess import lowess
         
         # Initialize an empty DataFrame to store comparison results
         comparison_df = pd.DataFrame()
@@ -247,14 +244,18 @@ class ModelManager:
             # Append the results for the current trial to the main DataFrame
             comparison_df = pd.concat([comparison_df, trial_comparison_df], axis=0)
 
+        # Evaluate models with the entire dataset (trial value of 0)
+        overall_eval_results = self.evaluate_models(data.copy(), target_col, model_names, group)
+        
+        # Convert to DataFrame and add a 'trial' column with value 0
+        overall_comparison_df = pd.DataFrame.from_dict(overall_eval_results, orient='index').reset_index().rename(columns={'index': 'Model'})
+        overall_comparison_df['trial'] = 0
+        
+        # Append the overall results to the main comparison DataFrame
+        comparison_df = pd.concat([comparison_df, overall_comparison_df], axis=0)
+
         if to_sort:
             comparison_df = comparison_df.sort_values(['trial', 'RMSE'])
-        
-        # Display the comparison in a well-formatted way
-        for trial in comparison_df['trial'].unique():
-            print(f"\n---------------\n Trial {trial} \n---------------")
-            trial_metrics = comparison_df[comparison_df['trial'] == trial]
-            print(trial_metrics.drop(columns=['trial']).to_string(index=False))
         
         # Determine which models to use
         models_to_use = {}
@@ -267,7 +268,8 @@ class ModelManager:
         
         # Create a DataFrame with predictions from all models
         results_df = data.copy()
-        errors = {}
+        errors_per_trial = {}
+        overall_errors = {}
         for name, model in models_to_use.items():
             features = data[['Tg', 'Ta']]
             
@@ -281,97 +283,77 @@ class ModelManager:
             results_df[f'{name}_pred'] = predictions
             # Calculate errors
             results_df[f'{name}_error'] = results_df[target_col] - results_df[f'{name}_pred']
-            errors[name] = {
+            errors_per_trial[name] = {
                 trial: results_df[results_df['trial'] == trial][f'{name}_error'].values
                 for trial in results_df['trial'].unique()
             }
+            overall_errors[name] = results_df[f'{name}_error'].values
 
         # Create error statistics DataFrame
-        error_stats = {}
-        over_all_error_stats = {}
-        normality_stats = []
+        error_stats_per_trial = {}
+        overall_error_stats = {}
         homoscedasticity_stats = []
-        assumption_result = {}
         for name in models_to_use.keys():
-            error_stats[name] = {
+            error_stats_per_trial[name] = {
                 trial: {
-                    'N': len(errors[name][trial]),
-                    'Mean': np.mean(errors[name][trial]),
-                    'Std Dev': np.std(errors[name][trial]),
-                    'Standard Error': stats.sem(errors[name][trial]),
+                    'N': len(errors_per_trial[name][trial]),
+                    'Mean': np.mean(errors_per_trial[name][trial]),
+                    'Std Dev': np.std(errors_per_trial[name][trial]),
+                    'Standard Error': stats.sem(errors_per_trial[name][trial]),
                     'CI Lower': stats.t.interval(
                         0.95,  # Confidence level (95%)
-                        len(errors[name][trial]) - 1,  # Degrees of freedom
-                        loc=np.mean(errors[name][trial]),  # Mean
-                        scale=stats.sem(errors[name][trial])  # Standard error
+                        len(errors_per_trial[name][trial]) - 1,  # Degrees of freedom
+                        loc=np.mean(errors_per_trial[name][trial]),  # Mean
+                        scale=stats.sem(errors_per_trial[name][trial])  # Standard error
                     )[0],  # Lower bound
                     'CI Upper': stats.t.interval(
                         0.95,  # Confidence level (95%)
-                        len(errors[name][trial]) - 1,  # Degrees of freedom
-                        loc=np.mean(errors[name][trial]),  # Mean
-                        scale=stats.sem(errors[name][trial])  # Standard error
+                        len(errors_per_trial[name][trial]) - 1,  # Degrees of freedom
+                        loc=np.mean(errors_per_trial[name][trial]),  # Mean
+                        scale=stats.sem(errors_per_trial[name][trial])  # Standard error
                     )[1],  # Upper bound
-                    'Min': np.min(errors[name][trial]),
-                    'Max': np.max(errors[name][trial]),
-                    'Range': np.max(errors[name][trial]) - np.min(errors[name][trial]),
-                    'IQR': np.percentile(errors[name][trial], 75) - np.percentile(errors[name][trial], 25),
-                    'Skewness': stats.skew(errors[name][trial]),
-                    'Kurtosis': stats.kurtosis(errors[name][trial])
+                    'Min': np.min(errors_per_trial[name][trial]),
+                    'Max': np.max(errors_per_trial[name][trial]),
+                    'Range': np.max(errors_per_trial[name][trial]) - np.min(errors_per_trial[name][trial]),
+                    'IQR': np.percentile(errors_per_trial[name][trial], 75) - np.percentile(errors_per_trial[name][trial], 25),
+                    'Skewness': stats.skew(errors_per_trial[name][trial]),
+                    'Kurtosis': stats.kurtosis(errors_per_trial[name][trial])
                 }
-                for trial in errors[name].keys()
+                for trial in errors_per_trial[name].keys()
             }
 
             # Calculate overall error statistics
-            overall_errors = np.concatenate(list(errors[name].values()))
-            over_all_error_stats[name] = {
-                'N': len(overall_errors),
-                'Mean': np.mean(overall_errors),
-                'Std Dev': np.std(overall_errors),
-                'Standard Error': stats.sem(overall_errors),
+            overall_error_stats[name] = {
+                'N': len(overall_errors[name]),
+                'Mean': np.mean(overall_errors[name]),
+                'Std Dev': np.std(overall_errors[name]),
+                'Standard Error': stats.sem(overall_errors[name]),
                 'CI Lower': stats.t.interval(
                     0.95,  # Confidence level (95%)
-                    len(overall_errors) - 1,  # Degrees of freedom
-                    loc=np.mean(overall_errors),  # Mean
-                    scale=stats.sem(overall_errors)  # Standard error
+                    len(overall_errors[name]) - 1,  # Degrees of freedom
+                    loc=np.mean(overall_errors[name]),  # Mean
+                    scale=stats.sem(overall_errors[name])  # Standard error
                 )[0],  # Lower bound
                 'CI Upper': stats.t.interval(
                     0.95,  # Confidence level (95%)
-                    len(overall_errors) - 1,  # Degrees of freedom
-                    loc=np.mean(overall_errors),  # Mean
-                    scale=stats.sem(overall_errors)  # Standard error
+                    len(overall_errors[name]) - 1,  # Degrees of freedom
+                    loc=np.mean(overall_errors[name]),  # Mean
+                    scale=stats.sem(overall_errors[name])  # Standard error
                 )[1],
-                'Min': np.min(overall_errors),
-                'Max': np.max(overall_errors),
-                'Range': np.max(overall_errors) - np.min(overall_errors),
-                'IQR': np.percentile(overall_errors, 75) - np.percentile(overall_errors, 25),
-                'Skewness': stats.skew(overall_errors),
-                'Kurtosis': stats.kurtosis(overall_errors)
+                'Min': np.min(overall_errors[name]),
+                'Max': np.max(overall_errors[name]),
+                'Range': np.max(overall_errors[name]) - np.min(overall_errors[name]),
+                'IQR': np.percentile(overall_errors[name], 75) - np.percentile(overall_errors[name], 25),
+                'Skewness': stats.skew(overall_errors[name]),
+                'Kurtosis': stats.kurtosis(overall_errors[name])
             }
         
             for trial in results_df['trial'].unique():
                 trial_data = results_df[results_df['trial'] == trial]
-                normality = test_normality(trial_data[f'{name}_error'])
                 homoscedasticity = test_homoscedasticity(
-                    trial_data['Tc'], 
                     trial_data[['Tg', 'Ta']], 
                     trial_data[f'{name}_error']
                 )
-                
-                assumption_result[(name, trial)] = {
-                    'normality': normality['conclusion'],
-                    'homoscedasticity': homoscedasticity['conclusion']
-                }
-
-                normality.pop('conclusion')
-                normality_stats += [
-                    {
-                        'model': name,
-                        'trial': trial,
-                        'test': test_name,
-                        **test_results
-                    }
-                    for test_name, test_results in normality.items()
-                ]
 
                 homoscedasticity.pop('conclusion')
                 homoscedasticity_stats += [
@@ -384,18 +366,16 @@ class ModelManager:
                     for test_name, test_results in homoscedasticity.items()
                 ]
 
-        stats_test_result = test_statistical_significance(errors)
+        stats_test_result = test_statistical_significance({model: comparison_df[(comparison_df['Model'] == model) & (comparison_df['trial'] != 0)]['RMSE'].tolist() for model in comparison_df['Model'].unique()})
 
         error_stats_flat = [
             {'Model': name, 'Trial': trial, **stats}
-            for name, trials in error_stats.items()
+            for name, trials in error_stats_per_trial.items()
             for trial, stats in trials.items()
         ]
         error_stats_df = pd.DataFrame(error_stats_flat)
-        overall_error_stats_df = pd.DataFrame.from_dict(over_all_error_stats, orient='index').reset_index().rename(columns={'index': 'Model'})
-        normality_stats_df = pd.DataFrame(normality_stats)
+        overall_error_stats_df = pd.DataFrame.from_dict(overall_error_stats, orient='index').reset_index().rename(columns={'index': 'Model'})
         homoscedasticity_stats_df = pd.DataFrame(homoscedasticity_stats)
-        assumption_result_df = pd.DataFrame.from_dict(assumption_result, orient='index').reset_index().rename(columns={'level_0': 'model', 'level_1': 'trial'})
 
         # Save DataFrames to CSV files
         data_path = f'../reports/results/testing/{conditions[0]}/{conditions[1]}'
@@ -403,26 +383,23 @@ class ModelManager:
         comparison_df.to_csv(f'{data_path}/{conditions[0]}_{conditions[1]}_comparison.csv', index=False)
         error_stats_df.to_csv(f'{data_path}/{conditions[0]}_{conditions[1]}_error_stats.csv', index=False)
         overall_error_stats_df.to_csv(f'{data_path}/{conditions[0]}_{conditions[1]}_overall_error_stats.csv', index=False)
-        normality_stats_df.to_csv(f'{data_path}/{conditions[0]}_{conditions[1]}_normality_stats.csv', index=False)
         homoscedasticity_stats_df.to_csv(f'{data_path}/{conditions[0]}_{conditions[1]}_homoscedasticity_stats.csv', index=False)
-        assumption_result_df.to_csv(f'{data_path}/{conditions[0]}_{conditions[1]}_assumption_results.csv', index=False)
-
+        
         # Save statistical test results to a JSON file
         with open(f'{data_path}/{conditions[0]}_{conditions[1]}_stats_test_result.json', 'w') as f:
             json.dump(stats_test_result, f, indent=4, cls=NumpyEncoder)
             
+        # Display the comparison in a well-formatted way
+        for trial in comparison_df['trial'].unique():
+            print(f"\n---------------\n Trial {trial} \n---------------")
+            trial_metrics = comparison_df[comparison_df['trial'] == trial]
+            print(trial_metrics.drop(columns=['trial']).to_string(index=False))
+
         # Display the error statistics in a well-formatted way
         for trial in error_stats_df['Trial'].unique():
             print(f"\n---------------\n Trial {trial} \n---------------")
             trial_error_stats = error_stats_df[error_stats_df['Trial'] == trial]
             print(trial_error_stats.drop(columns=['Trial']).to_string(index=False))
-
-        # Display the normality results by trial
-        print("\n Normality by Trial:")
-        for trial in normality_stats_df['trial'].unique():
-            print(f"\nTrial {trial}:")
-            trial_normality = normality_stats_df[normality_stats_df['trial'] == trial]
-            print(trial_normality.to_string(index=False))
 
         # Display the homoscedasticity results by trial
         print("\n Homoscedasticity by Trial:")
@@ -431,17 +408,6 @@ class ModelManager:
             trial_homoscedasticity = homoscedasticity_stats_df[homoscedasticity_stats_df['trial'] == trial]
             print(trial_homoscedasticity.to_string(index=False))
 
-        # Display the assumption results by trial
-        print("\n Assumptions by Trial:")
-        for trial in assumption_result_df['trial'].unique():
-            print(f"\nTrial {trial}:")
-            trial_assumptions = assumption_result_df[assumption_result_df['trial'] == trial]
-            print(trial_assumptions.to_string(index=False))
-        
-        # Display statistical test results in an organized manner
-        print("\n Statistical Test Results:")
-        print(stats_test_result)
-        
         # Plot if requested
         if plot:
             figure_path = f'../reports/figures/testing/{conditions[0]}/{conditions[1]}'
@@ -539,10 +505,9 @@ class ModelManager:
         return comparison_df, \
                 error_stats_df, \
                 overall_error_stats_df, \
-                normality_stats_df, \
                 homoscedasticity_stats_df, \
-                assumption_result_df, \
-                stats_test_result
+                stats_test_result, \
+                overall_errors
     
     # Add this to enable automatic feature selection during prediction
     def auto_predict(self, data, target_col, model_name):
