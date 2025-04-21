@@ -1,0 +1,9 @@
+models,size,r_sum,r_mean
+Standardized Preprocessed External,3,10,3.3333333333333335
+Standardized Preprocessed Augmented,3,6,2.0
+Standardized External,3,16,5.333333333333333
+Standardized Augmented,3,12,4.0
+Normalized Preprocessed External,3,9,3.0
+Normalized Preprocessed Augmented,3,14,4.666666666666667
+Normalized External,3,20,6.666666666666667
+Normalized Augmented,3,21,7.0

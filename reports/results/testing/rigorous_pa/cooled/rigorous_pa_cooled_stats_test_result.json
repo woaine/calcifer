@@ -1,9 +1,22 @@
 {
+    "Normality Test": {
+        "all_normal": false,
+        "details": {
+            "Standardized Preprocessed External": false,
+            "Standardized Preprocessed Augmented": false,
+            "Standardized External": false,
+            "Standardized Augmented": false,
+            "Normalized Preprocessed External": false,
+            "Normalized Preprocessed Augmented": false,
+            "Normalized External": false,
+            "Normalized Augmented": false
+        }
+    },
     "Friedman Test": {
-        "N": 18,
-        "chi2": 106.05547652916069,
+        "N": 3,
+        "chi2": 17.444444444444443,
         "df": 7,
-        "asymp_sig": 6.033818234472804e-20,
+        "asymp_sig": 0.014744503122586803,
         "significant": true
     },
     "Nemenyi Test": {
@@ -19,232 +32,232 @@
                 "Normalized Augmented"
             ],
             "size": [
-                18,
-                18,
-                18,
-                18,
-                18,
-                18,
-                18,
-                18
+                3,
+                3,
+                3,
+                3,
+                3,
+                3,
+                3,
+                3
             ],
             "r_sum": [
-                44,
-                67,
-                88,
-                70,
-                105,
-                72,
-                86,
-                116
+                3,
+                6,
+                9,
+                12,
+                15,
+                18,
+                21,
+                24
             ],
             "r_mean": [
-                2.4444444444444446,
-                3.7222222222222223,
-                4.888888888888889,
-                3.888888888888889,
-                5.833333333333333,
+                1.0,
+                2.0,
+                3.0,
                 4.0,
-                4.777777777777778,
-                6.444444444444445
+                5.0,
+                6.0,
+                7.0,
+                8.0
             ]
         },
         "comparisons": [
             {
                 "model_1": "Standardized Preprocessed External",
                 "model_2": "Standardized Preprocessed Augmented",
-                "r_mean_diff": 1.2777777777777777,
-                "p-value": 0.9999522111535677,
+                "r_mean_diff": 1.0,
+                "p-value": 0.9996644224650172,
                 "significant": false
             },
             {
                 "model_1": "Standardized Preprocessed External",
                 "model_2": "Standardized External",
-                "r_mean_diff": 2.4444444444444446,
-                "p-value": 0.012194544938358365,
-                "significant": true
+                "r_mean_diff": 2.0,
+                "p-value": 0.9999998198338266,
+                "significant": false
             },
             {
                 "model_1": "Standardized Preprocessed External",
                 "model_2": "Standardized Augmented",
-                "r_mean_diff": 1.4444444444444442,
-                "p-value": 0.019377107832146745,
-                "significant": true
+                "r_mean_diff": 3.0,
+                "p-value": 0.4817663074319849,
+                "significant": false
             },
             {
                 "model_1": "Standardized Preprocessed External",
                 "model_2": "Normalized Preprocessed External",
-                "r_mean_diff": 3.3888888888888884,
-                "p-value": 0.8889062174545482,
+                "r_mean_diff": 4.0,
+                "p-value": 0.9978112687232679,
                 "significant": false
             },
             {
                 "model_1": "Standardized Preprocessed External",
                 "model_2": "Normalized Preprocessed Augmented",
-                "r_mean_diff": 1.5555555555555554,
-                "p-value": 2.2256282098176428e-05,
-                "significant": true
-            },
-            {
-                "model_1": "Standardized Preprocessed External",
-                "model_2": "Normalized External",
-                "r_mean_diff": 2.333333333333333,
-                "p-value": 0.6641386861776493,
+                "r_mean_diff": 5.0,
+                "p-value": 0.8078053264213932,
                 "significant": false
             },
             {
                 "model_1": "Standardized Preprocessed External",
+                "model_2": "Normalized External",
+                "r_mean_diff": 6.0,
+                "p-value": 0.9413468324641449,
+                "significant": false
+            },
+            {
+                "model_1": "Standardized Preprocessed External",
+                "model_2": "Normalized Augmented",
+                "r_mean_diff": 7.0,
+                "p-value": 0.886305472010565,
+                "significant": false
+            },
+            {
+                "model_1": "Standardized Preprocessed Augmented",
+                "model_2": "Standardized External",
+                "r_mean_diff": 1.0,
+                "p-value": 0.9999782922716192,
+                "significant": false
+            },
+            {
+                "model_1": "Standardized Preprocessed Augmented",
+                "model_2": "Standardized Augmented",
+                "r_mean_diff": 2.0,
+                "p-value": 0.19522068354074074,
+                "significant": false
+            },
+            {
+                "model_1": "Standardized Preprocessed Augmented",
+                "model_2": "Normalized Preprocessed External",
+                "r_mean_diff": 3.0,
+                "p-value": 0.9413468324641449,
+                "significant": false
+            },
+            {
+                "model_1": "Standardized Preprocessed Augmented",
+                "model_2": "Normalized Preprocessed Augmented",
+                "r_mean_diff": 4.0,
+                "p-value": 0.4817663074319849,
+                "significant": false
+            },
+            {
+                "model_1": "Standardized Preprocessed Augmented",
+                "model_2": "Normalized External",
+                "r_mean_diff": 5.0,
+                "p-value": 0.708975728954057,
+                "significant": false
+            },
+            {
+                "model_1": "Standardized Preprocessed Augmented",
+                "model_2": "Normalized Augmented",
+                "r_mean_diff": 6.0,
+                "p-value": 0.9912431306228394,
+                "significant": false
+            },
+            {
+                "model_1": "Standardized External",
+                "model_2": "Standardized Augmented",
+                "r_mean_diff": 1.0,
+                "p-value": 0.3721330112973782,
+                "significant": false
+            },
+            {
+                "model_1": "Standardized External",
+                "model_2": "Normalized Preprocessed External",
+                "r_mean_diff": 2.0,
+                "p-value": 0.9912431306228394,
+                "significant": false
+            },
+            {
+                "model_1": "Standardized External",
+                "model_2": "Normalized Preprocessed Augmented",
+                "r_mean_diff": 3.0,
+                "p-value": 0.708975728954057,
+                "significant": false
+            },
+            {
+                "model_1": "Standardized External",
+                "model_2": "Normalized External",
+                "r_mean_diff": 4.0,
+                "p-value": 0.886305472010565,
+                "significant": false
+            },
+            {
+                "model_1": "Standardized External",
+                "model_2": "Normalized Augmented",
+                "r_mean_diff": 5.0,
+                "p-value": 0.9413468324641449,
+                "significant": false
+            },
+            {
+                "model_1": "Standardized Augmented",
+                "model_2": "Normalized Preprocessed External",
+                "r_mean_diff": 1.0,
+                "p-value": 0.8863054720105648,
+                "significant": false
+            },
+            {
+                "model_1": "Standardized Augmented",
+                "model_2": "Normalized Preprocessed Augmented",
+                "r_mean_diff": 2.0,
+                "p-value": 0.9996644224650172,
+                "significant": false
+            },
+            {
+                "model_1": "Standardized Augmented",
+                "model_2": "Normalized External",
+                "r_mean_diff": 3.0,
+                "p-value": 0.9912431306228394,
+                "significant": false
+            },
+            {
+                "model_1": "Standardized Augmented",
                 "model_2": "Normalized Augmented",
                 "r_mean_diff": 4.0,
-                "p-value": 0.8094624372219109,
-                "significant": false
-            },
-            {
-                "model_1": "Standardized Preprocessed Augmented",
-                "model_2": "Standardized External",
-                "r_mean_diff": 1.166666666666667,
-                "p-value": 0.04121233690212034,
-                "significant": true
-            },
-            {
-                "model_1": "Standardized Preprocessed Augmented",
-                "model_2": "Standardized Augmented",
-                "r_mean_diff": 0.16666666666666652,
-                "p-value": 0.005139097791762248,
-                "significant": true
-            },
-            {
-                "model_1": "Standardized Preprocessed Augmented",
-                "model_2": "Normalized Preprocessed External",
-                "r_mean_diff": 2.1111111111111107,
-                "p-value": 0.9807238886849354,
-                "significant": false
-            },
-            {
-                "model_1": "Standardized Preprocessed Augmented",
-                "model_2": "Normalized Preprocessed Augmented",
-                "r_mean_diff": 0.2777777777777777,
-                "p-value": 0.00013908424372932604,
-                "significant": true
-            },
-            {
-                "model_1": "Standardized Preprocessed Augmented",
-                "model_2": "Normalized External",
-                "r_mean_diff": 1.0555555555555554,
-                "p-value": 0.4087324355273029,
-                "significant": false
-            },
-            {
-                "model_1": "Standardized Preprocessed Augmented",
-                "model_2": "Normalized Augmented",
-                "r_mean_diff": 2.7222222222222223,
-                "p-value": 0.9520676499810938,
-                "significant": false
-            },
-            {
-                "model_1": "Standardized External",
-                "model_2": "Standardized Augmented",
-                "r_mean_diff": 1.0000000000000004,
-                "p-value": 2.845289559516573e-10,
-                "significant": true
-            },
-            {
-                "model_1": "Standardized External",
-                "model_2": "Normalized Preprocessed External",
-                "r_mean_diff": 0.9444444444444438,
-                "p-value": 0.3868607783069812,
-                "significant": false
-            },
-            {
-                "model_1": "Standardized External",
-                "model_2": "Normalized Preprocessed Augmented",
-                "r_mean_diff": 0.8888888888888893,
-                "p-value": 0.8272294145798226,
-                "significant": false
-            },
-            {
-                "model_1": "Standardized External",
-                "model_2": "Normalized External",
-                "r_mean_diff": 0.1111111111111116,
-                "p-value": 5.36594942590618e-06,
-                "significant": true
-            },
-            {
-                "model_1": "Standardized External",
-                "model_2": "Normalized Augmented",
-                "r_mean_diff": 1.5555555555555554,
-                "p-value": 0.500153083436953,
-                "significant": false
-            },
-            {
-                "model_1": "Standardized Augmented",
-                "model_2": "Normalized Preprocessed External",
-                "r_mean_diff": 1.9444444444444442,
-                "p-value": 8.55993137702793e-05,
-                "significant": true
-            },
-            {
-                "model_1": "Standardized Augmented",
-                "model_2": "Normalized Preprocessed Augmented",
-                "r_mean_diff": 0.11111111111111116,
-                "p-value": 3.885780586188048e-15,
-                "significant": true
-            },
-            {
-                "model_1": "Standardized Augmented",
-                "model_2": "Normalized External",
-                "r_mean_diff": 0.8888888888888888,
-                "p-value": 0.7511754422349018,
-                "significant": false
-            },
-            {
-                "model_1": "Standardized Augmented",
-                "model_2": "Normalized Augmented",
-                "r_mean_diff": 2.555555555555556,
-                "p-value": 3.7213962836402104e-05,
+                "p-value": 0.019421813680576716,
                 "significant": true
             },
             {
                 "model_1": "Normalized Preprocessed External",
                 "model_2": "Normalized Preprocessed Augmented",
-                "r_mean_diff": 1.833333333333333,
-                "p-value": 0.0075040450065601005,
-                "significant": true
+                "r_mean_diff": 1.0,
+                "p-value": 0.9912431306228394,
+                "significant": false
             },
             {
                 "model_1": "Normalized Preprocessed External",
                 "model_2": "Normalized External",
-                "r_mean_diff": 1.0555555555555554,
-                "p-value": 0.04563102360850679,
-                "significant": true
+                "r_mean_diff": 2.0,
+                "p-value": 0.9996644224650172,
+                "significant": false
             },
             {
                 "model_1": "Normalized Preprocessed External",
                 "model_2": "Normalized Augmented",
-                "r_mean_diff": 0.6111111111111116,
-                "p-value": 0.999999792337488,
+                "r_mean_diff": 3.0,
+                "p-value": 0.4817663074319849,
                 "significant": false
             },
             {
                 "model_1": "Normalized Preprocessed Augmented",
                 "model_2": "Normalized External",
-                "r_mean_diff": 0.7777777777777777,
-                "p-value": 7.254228329145462e-10,
-                "significant": true
+                "r_mean_diff": 1.0,
+                "p-value": 0.9999782922716192,
+                "significant": false
             },
             {
                 "model_1": "Normalized Preprocessed Augmented",
                 "model_2": "Normalized Augmented",
-                "r_mean_diff": 2.4444444444444446,
-                "p-value": 0.013720493597586647,
-                "significant": true
+                "r_mean_diff": 2.0,
+                "p-value": 0.08690153564785619,
+                "significant": false
             },
             {
                 "model_1": "Normalized External",
                 "model_2": "Normalized Augmented",
-                "r_mean_diff": 1.666666666666667,
-                "p-value": 0.027013662274960826,
-                "significant": true
+                "r_mean_diff": 1.0,
+                "p-value": 0.19522068354074074,
+                "significant": false
             }
         ]
     }

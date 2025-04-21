@@ -1,6 +1,6 @@
 stats,values
-N,18
-chi2,106.05547652916069
+N,3
+chi2,17.444444444444443
 df,7
-asymp_sig,6.033818234472804e-20
+asymp_sig,0.014744503122586803
 significant,True
