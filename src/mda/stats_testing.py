@@ -1,17 +1,18 @@
 import numpy as np
-import seaborn as sns
+import pandas as pd
 from scipy import stats
+import json
+import os
 import statsmodels.api as sm
 from statsmodels.stats.diagnostic import het_breuschpagan, het_white, het_goldfeldquandt
 from statsmodels.stats.multicomp import pairwise_tukeyhsd
-from statsmodels.stats.libqsturng import qsturng
 from scipy.stats import friedmanchisquare
 import scikit_posthocs as sp
 
 import warnings
 warnings.filterwarnings('ignore')
 
-def test_normality(residuals, alpha=0.05):
+def test_normality(sample, alpha=0.05):
     """Test residuals for normality using multiple tests
     
     Parameters:
@@ -28,13 +29,13 @@ def test_normality(residuals, alpha=0.05):
     """
 
     # Shapiro-Wilk test 
-    shapiro_stat, shapiro_p = stats.shapiro(residuals)
+    shapiro_stat, shapiro_p = stats.shapiro(sample)
     
     # D'Agostino's K^2 test
-    dagostino_stat, dagostino_p = stats.normaltest(residuals)
+    dagostino_stat, dagostino_p = stats.normaltest(sample)
     
     # Anderson-Darling test
-    anderson_result = stats.anderson(residuals, 'norm')
+    anderson_result = stats.anderson(sample, 'norm')
     # Use the 5% level (index 2)
     anderson_stat = anderson_result.statistic
     anderson_crit = anderson_result.critical_values[2]
@@ -53,7 +54,7 @@ def test_normality(residuals, alpha=0.05):
     
     return results
 
-def test_homoscedasticity(target, predictors, residuals, alpha=0.05):
+def test_homoscedasticity(predictors, residuals, alpha=0.05):
     """Test residuals for homoscedasticity using multiple tests
     
     Parameters:
@@ -80,7 +81,7 @@ def test_homoscedasticity(target, predictors, residuals, alpha=0.05):
     white_stat, white_p, _, _ = het_white(residuals, X)
     
     # Goldfeld-Quandt test
-    gq_stat, gq_p, _ = het_goldfeldquandt(target, X)
+    gq_stat, gq_p, _ = het_goldfeldquandt(residuals, X)
     
     # Compile results
     results = {
@@ -99,34 +100,41 @@ def test_homoscedasticity(target, predictors, residuals, alpha=0.05):
     
     return results
 
-def test_statistical_significance(errors, alpha=0.05):
-    normal = True
-    # Compare normality of errors for each model
+def test_statistical_significance(input, alpha=0.05):
+    # Extract data for analysis
+    models = list(input.keys())
+    results = {}
+
+    # Compare normality of input for each model
     normality_results = {}
-    for model in errors.keys():
-        residuals = np.concatenate(list(errors[model].values()))
+    for model in models:
+        residuals = input[model]
         normality_test = test_normality(residuals)
         normality_results[model] = normality_test['conclusion']
     
-    # Check if all models have normally distributed errors
+    # Check if all models have normally distributed input
     normal = all(normality_results.values())
 
-    results = {}
+    results['Normality Test'] = {
+        'all_normal': normal,
+        'details': normality_results
+    }
+
     if normal:
         # For normally distributed data, use one-way ANOVA
         # Prepare data for ANOVA
         anova_data = []
         anova_groups = []
         
-        for model in errors.keys():
-            anova_data.extend(np.concatenate(list(errors[model].values())))
-            anova_groups.extend([model] * len(np.concatenate(list(errors[model].values()))))
+        for model in models:
+            anova_data.extend(input[model])
+            anova_groups.extend([model] * len(input[model]))
         
         # Perform one-way ANOVA
-        f_statistic, p_value = stats.f_oneway(*[np.concatenate(list(errors[model].values())) for model in errors.keys()])
+        f_statistic, p_value = stats.f_oneway(*[input[model] for model in models])
         
         # Calculate additional ANOVA details
-        groups = [np.concatenate(list(errors[model].values())) for model in errors.keys()]
+        groups = [input[model] for model in models]
         group_means = [np.mean(group) for group in groups]
         overall_mean = np.mean(np.concatenate(groups))
         
@@ -142,17 +150,16 @@ def test_statistical_significance(errors, alpha=0.05):
         ms_between = ss_between / df_between
         ms_within = ss_within / df_within
         
+        total_ss = ss_between + ss_within
+        total_df = df_between + df_within
+
         results['One-way ANOVA'] = {
-            'f_statistic': f_statistic,
-            'p-value': p_value,
-            'significant': p_value < alpha,
-            'df_between': df_between,
-            'df_within': df_within,
-            'ss_between': ss_between,
-            'ss_within': ss_within,
-            'ms_between': ms_between,
-            'ms_within': ms_within
+            stat: value for stat, value in zip(
+            ['f-statistic', 'p-value', 'significant', 'df_between', 'df_within', 'total_df', 'ss_between', 'ss_within', 'total_ss', 'ms_between', 'ms_within'],
+            [f_statistic, p_value, p_value < alpha, df_between, df_within, total_df, ss_between, ss_within, total_ss, ms_between, ms_within]
+            )
         }
+
         # Calculate effect sizes for ANOVA
         n_total = sum(len(group) for group in groups)
         eta_squared = ss_between / (ss_between + ss_within)
@@ -160,21 +167,42 @@ def test_statistical_significance(errors, alpha=0.05):
         epsilon_squared = (ss_between - (df_between * ms_within)) / (ss_between + ss_within)
 
         # Confidence intervals for eta squared
-        ci_lower = eta_squared - (1.96 * np.sqrt((2 * eta_squared * (1 - eta_squared)) / n_total))
-        ci_upper = eta_squared + (1.96 * np.sqrt((2 * eta_squared * (1 - eta_squared)) / n_total))
+        ci_eta_lower = eta_squared - (1.96 * np.sqrt((2 * eta_squared * (1 - eta_squared)) / n_total))
+        ci_eta_upper = eta_squared + (1.96 * np.sqrt((2 * eta_squared * (1 - eta_squared)) / n_total))
+
+        # Confidence intervals for omega squared
+        ci_omega_lower = omega_squared - (1.96 * np.sqrt((2 * omega_squared * (1 - omega_squared)) / n_total))
+        ci_omega_upper = omega_squared + (1.96 * np.sqrt((2 * omega_squared * (1 - omega_squared)) / n_total))
+
+        # Confidence intervals for epsilon squared
+        ci_epsilon_lower = epsilon_squared - (1.96 * np.sqrt((2 * epsilon_squared * (1 - epsilon_squared)) / n_total))
+        ci_epsilon_upper = epsilon_squared + (1.96 * np.sqrt((2 * epsilon_squared * (1 - epsilon_squared)) / n_total))
 
         results['Effect Sizes'] = {
-            'eta_squared': eta_squared,
-            'omega_squared': omega_squared,
-            'epsilon_squared': epsilon_squared,
-            'CI_lower': max(0, ci_lower),
-            'CI_upper': min(1, ci_upper),
+            stat: value for stat, value in zip(
+            [
+                'eta_squared', 'omega_squared', 'epsilon_squared',
+                'eta_CI_lower', 'eta_CI_upper',
+                'omega_CI_lower', 'omega_CI_upper',
+                'epsilon_CI_lower', 'epsilon_CI_upper'
+            ],
+            [
+                eta_squared, omega_squared, epsilon_squared,
+                max(0, ci_eta_lower), min(1, ci_eta_upper),
+                max(0, ci_omega_lower), min(1, ci_omega_upper),
+                max(0, ci_epsilon_lower), min(1, ci_epsilon_upper)
+            ]
+            )
         }
         
         # If ANOVA is significant, perform Tukey's HSD post-hoc test
         if p_value < alpha:
             tukey = pairwise_tukeyhsd(np.array(anova_data), np.array(anova_groups), alpha=alpha)
             results['Tukey\'s Honest Significant Difference'] = {
+                'summary': {
+                    'models': models,
+                    'means': [np.mean(input[model]) for model in models],
+                },
                 'comparisons': [
                     {
                         'model_1': tukey._results_table.data[i+1][0],
@@ -194,9 +222,9 @@ def test_statistical_significance(errors, alpha=0.05):
         # Prepare data for Friedman test
         # Note: Friedman test requires equal number of samples for each model
         # We'll take the minimum common length
-        min_length = min(len(np.concatenate(list(errors[model].values()))) for model in errors.keys())
+        min_length = min(len(input[model]) for model in models)
         
-        friedman_data = np.array([np.concatenate(list(errors[model].values()))[:min_length] for model in errors.keys()])
+        friedman_data = np.array([input[model][:min_length] for model in models])
         
         # Perform Friedman test
         try:
@@ -210,12 +238,10 @@ def test_statistical_significance(errors, alpha=0.05):
             ranks = np.mean(np.argsort(np.argsort(friedman_data, axis=1), axis=0) + 1, axis=1)
             
             results['Friedman Test'] = {
-                'N': n,
-                'chi2': chi2,
-                'df': df,
-                'asymp_sig': p_value,
-                'significant': p_value < alpha,
-                'ranks': ranks.tolist()
+                stat: value for stat, value in zip(
+                ['N', 'chi2', 'df', 'asymp_sig', 'significant'],
+                [n, chi2, df, p_value, p_value < alpha]
+                )
             }
             
             # If Friedman test is significant, perform post-hoc test (Nemenyi)
@@ -228,14 +254,12 @@ def test_statistical_significance(errors, alpha=0.05):
                 ranks = np.mean(np.argsort(np.argsort(friedman_data, axis=1), axis=0) + 1, axis=1)
                 r_sum = np.sum(np.argsort(np.argsort(friedman_data, axis=1), axis=0) + 1, axis=1)
                 r_mean = ranks
-                q_crit = qsturng(1 - alpha, k, np.inf)
                 
                 nemenyi_results = {
-                    'models': list(errors.keys()),
+                    'models': list(models),
+                    'size': [n]*k,
                     'r_sum': r_sum.tolist(),
-                    'size': n,
-                    'r_mean': r_mean.tolist(),
-                    'q_crit': q_crit
+                    'r_mean': r_mean.tolist()
                 }
                 
                 # Pairwise comparisons
@@ -243,21 +267,13 @@ def test_statistical_significance(errors, alpha=0.05):
                 for i in range(k):
                     for j in range(i + 1, k):
                         mean_diff = abs(r_mean[i] - r_mean[j])
-                        std_error = np.sqrt(k * (k + 1) / (6 * n))
-                        q_stat = mean_diff / std_error
-                        r_crit = std_error*q_crit
                         p_value = posthoc.iloc[i, j]
                         comparisons.append({
-                            'model_1': list(errors.keys())[i],
-                            'model_2': list(errors.keys())[j],
+                            'model_1': list(models)[i],
+                            'model_2': list(models)[j],
                             'r_mean_diff': mean_diff,
-                            'std_error': std_error,
-                            'q_stat': q_stat,
                             'p-value': p_value,
-                            'r_crit': r_crit,
-                            'p_significant': p_value < alpha,
-                            'q_significant': q_stat > q_crit,
-                            'r_significant': mean_diff > r_crit
+                            'significant': p_value < alpha
                         })
                 
                 results['Nemenyi Test'] = {
@@ -268,3 +284,72 @@ def test_statistical_significance(errors, alpha=0.05):
             results['error'] = str(e)
     
     return results
+
+def create_dataframes_from_stats(json_data):
+    """Create DataFrames from statistical test results."""
+    dataframes = {}
+    
+    for key, value in json_data.items():
+        if key == "One-way ANOVA" or key == "Effect Sizes" or key == "Friedman Test":
+            # Simple key-value sections to DataFrame
+            df = pd.DataFrame({'stats': list(value.keys()), 'values': list(value.values())})
+            dataframes[key] = df
+        
+        if key == "Normality Test":
+            # Simple key-value sections to DataFrame
+            df = pd.DataFrame({'stats': list(value['details'].keys()), 'values': list(value['details'].keys())})
+            dataframes[key] = df
+
+        elif key == "Tukey's Honest Significant Difference":
+            # Extract comparison data
+            if "comparisons" in value:
+                df = pd.DataFrame(value["comparisons"])
+                dataframes[key] = df
+        
+        elif key == "Nemenyi Test":
+            # Handle both the comparisons and summary
+            if "comparisons" in value:
+                comparisons_df = pd.DataFrame(value["comparisons"])
+                dataframes[f"{key}_comparisons"] = comparisons_df
+            
+            if "summary" in value:
+                summary = value["summary"]
+                model_ranks_df = pd.DataFrame(summary)
+                dataframes[f"{key}_summary"] = model_ranks_df
+    
+    return dataframes
+
+def process_stats_files(results_path, combinations):
+    """
+    Process statistical test result JSON files and save as CSV files.
+    
+    Args:
+        results_path: Base path to the results directory
+        combinations: List of (hc, rc) tuples representing combinations to process
+    """
+    for hc, rc in combinations:
+        # Construct the file path
+        file_path = f"{results_path}/{hc}/{rc}/{hc}_{rc}_stats_test_result.json"
+        print(f"Processing: {file_path}")
+        
+        try:
+            # Ensure the file exists
+            if not os.path.exists(file_path):
+                print(f"File not found: {file_path}")
+                continue
+                
+            # Load JSON file
+            with open(file_path, 'r') as f:
+                content = f.read()
+            
+            # Create DataFrames
+            dataframes = create_dataframes_from_stats(json.loads(content))
+
+            # Save each DataFrame to CSV
+            for key, df in dataframes.items():
+                output_filename = f"{results_path}/{hc}/{rc}/{hc}_{rc}_{key}.csv"
+                df.to_csv(output_filename, index=False)
+                print(f"Saved: {output_filename}")
+                
+        except Exception as e:
+            print(f"Error processing {file_path}: {str(e)}")
