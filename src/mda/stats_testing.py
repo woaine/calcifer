@@ -6,7 +6,7 @@ import os
 import statsmodels.api as sm
 from statsmodels.stats.diagnostic import het_breuschpagan, het_white, het_goldfeldquandt
 from statsmodels.stats.multicomp import pairwise_tukeyhsd
-from scipy.stats import friedmanchisquare
+from scipy.stats import friedmanchisquare, rankdata
 import scikit_posthocs as sp
 
 import warnings
@@ -234,9 +234,6 @@ def test_statistical_significance(input, alpha=0.05):
             k = friedman_data.shape[0]
             df = k - 1
             
-            # Calculate ranks
-            ranks = np.mean(np.argsort(np.argsort(friedman_data, axis=1), axis=0) + 1, axis=1)
-            
             results['Friedman Test'] = {
                 stat: value for stat, value in zip(
                 ['N', 'chi2', 'df', 'asymp_sig', 'significant'],
@@ -251,9 +248,9 @@ def test_statistical_significance(input, alpha=0.05):
                 # Calculate additional details for Nemenyi test
                 n = friedman_data.shape[1]
                 k = friedman_data.shape[0]
-                ranks = np.mean(np.argsort(np.argsort(friedman_data, axis=1), axis=0) + 1, axis=1)
-                r_sum = np.sum(np.argsort(np.argsort(friedman_data, axis=1), axis=0) + 1, axis=1)
-                r_mean = ranks
+                ranks = np.array([rankdata(col) for col in friedman_data.T]).T
+                r_sum = ranks.sum(axis=1)
+                r_mean = ranks.mean(axis=1)
                 
                 nemenyi_results = {
                     'models': list(models),
