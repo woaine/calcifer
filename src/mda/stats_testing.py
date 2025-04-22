@@ -9,6 +9,7 @@ from statsmodels.stats.multicomp import pairwise_tukeyhsd
 from scipy.stats import friedmanchisquare
 import scikit_posthocs as sp
 from scipy.stats import fligner
+import itertools
 
 import warnings
 warnings.filterwarnings('ignore')
@@ -121,20 +122,29 @@ def fligner_killeen_test(df, model_params):
             model_data = model_data[model_data[param] == value]
         
         # Get unique epochs for this model
-        epochs = model_data['epoch'].unique()
+        epochs = model_data['epoch'].iloc[-100:].unique()
 
-        # Perform Fligner-Killeen test
-        stat, p_value = fligner(*[model_data[model_data['epoch'] == epoch]['val_loss'].values for epoch in epochs])
-        
-        # Store results
-        result = {
-            **model_dict,
-            'df': 4,
-            'statistic': stat,
-            'p_value': p_value
-        }
-        results.append(result)
-        
+        # For each pair of epochs
+        for epoch1, epoch2 in itertools.combinations(epochs, 2):
+            # Get values for each epoch
+            values_epoch1 = model_data[model_data['epoch'] == epoch1]['val_loss'].values
+            values_epoch2 = model_data[model_data['epoch'] == epoch2]['val_loss'].values
+            
+            # Perform Fligner-Killeen test
+            stat, p_value = fligner(values_epoch1, values_epoch2)
+            
+            # Only record significant results (p-value < 0.05)
+            if p_value < 0.05:
+                # Store results
+                result = {
+                    **model_dict,
+                    'epoch_1': epoch1,
+                    'epoch_2': epoch2,
+                    'statistic': stat,
+                    'p_value': p_value
+                }
+                results.append(result)
+    
     # Convert to dataframe
     results_df = pd.DataFrame(results)
     
