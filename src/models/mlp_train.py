@@ -34,7 +34,7 @@ random.seed(SEED_VALUE)
 np.random.seed(SEED_VALUE)
 tf.random.set_seed(SEED_VALUE)
 
-def create_model(n_features, layers, activation, l2_alpha, batch_normalization, dropout, optimizer):
+def create_model(n_features: int, layers: list, activation: str, l2_alpha: float, batch_normalization: bool, dropout: float, optimizer: str):
     model = Sequential([InputLayer(shape=(n_features,))])
     for neurons in layers:
         model.add(Dense(neurons, kernel_initializer='he_uniform', kernel_regularizer=L2(l2_alpha) if l2_alpha else None))
@@ -48,7 +48,7 @@ def create_model(n_features, layers, activation, l2_alpha, batch_normalization, 
     
     return model
 
-def scale_data(X_train, X_test, y_train, y_test, scaler_type):
+def scale_data(X_train, X_test, y_train, y_test, scaler_type: str):
     scaler_cls = StandardScaler if scaler_type == 'standard' else MinMaxScaler
     X_scaler, y_scaler = scaler_cls(), scaler_cls()
     X_train, X_test = X_scaler.fit_transform(X_train), X_scaler.transform(X_test)
@@ -56,7 +56,7 @@ def scale_data(X_train, X_test, y_train, y_test, scaler_type):
    
     return X_train, X_test, y_train, y_test, y_scaler
 
-def train(X_train, X_test, y_train, y_test, model, epochs):
+def train(X_train, X_test, y_train, y_test, model, epochs: int):
     callbacks = [
         ReduceLROnPlateau(factor=0.5, patience=25, min_lr=1e-6),
         EarlyStopping(patience=epochs, restore_best_weights=True)
@@ -71,7 +71,7 @@ def grid_search(X, y, hyperparameters_grid: dict, dir_path: str, epochs: int, sc
     if not resume_training:
         save_hyperparameters(product(*hyperparameters_grid.values()), hyperparameters_file)
     
-    for hyperparameters in load_remaining_params(hyperparameters_file):
+    for hyperparameters in load_remaining_hyperparameters(hyperparameters_file):
         kf = KFold(n_splits=5, shuffle=True, random_state=SEED_VALUE)
         fold_histories = {}
         start_time = time.time()
@@ -86,7 +86,7 @@ def grid_search(X, y, hyperparameters_grid: dict, dir_path: str, epochs: int, sc
             fold_histories = process_results(result, fold_histories, hyperparameters, epochs, fold, scaler, y_scaler)
         duration = time.time() - start_time
         save_results(hyperparameters, duration, fold_histories, dir_path)
-        remove_trained_params(hyperparameters, hyperparameters_file)
+        remove_trained_hyperparameters(hyperparameters, hyperparameters_file)
 
         clear_session()
     
@@ -149,7 +149,7 @@ def save_hyperparameters(hyperparameters_list, hyperparameters_file):
         for hyperparameters in hyperparameters_list:
             f.write(",".join([json.dumps(hyperparameters[0])] + list(map(str, hyperparameters[1:]))) + "\n")
 
-def load_remaining_params(param_file: str) -> list:
+def load_remaining_hyperparameters(param_file: str) -> list:
     params = []
     with open(param_file, "r") as f:
         for line in f:
@@ -159,7 +159,7 @@ def load_remaining_params(param_file: str) -> list:
 
     return params
 
-def remove_trained_params(trained_params, param_file):
+def remove_trained_hyperparameters(trained_params, param_file):
     trained_params_str = ",".join([json.dumps(trained_params[0])] + list(map(str, trained_params[1:])))
 
     with open(param_file, "r") as f:

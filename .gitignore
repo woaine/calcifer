@@ -19,3 +19,8 @@ val/
 # Jupyter runtime
 *.pid
 *.log
+
+*.ini
+
+/app/logs/*
+/app/resources/*

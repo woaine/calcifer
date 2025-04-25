@@ -1,1 +1,1 @@
-from models.mlp_model import CalciferNet
+from .mlp_model import CalciferNet
