@@ -1,1 +1,1 @@
-from detection.yolo_model import YOLO11Face
+from .yolo_model import YOLO11Face, YOLO11Person

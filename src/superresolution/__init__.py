@@ -1,1 +1,1 @@
-from realesrgan_model import SuperResolution
+from .realesrgan_model import SuperResolution
