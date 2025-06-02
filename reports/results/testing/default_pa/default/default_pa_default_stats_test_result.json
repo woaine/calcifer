@@ -1,0 +1,22 @@
+{
+    "Normality Test": {
+        "all_normal": false,
+        "details": {
+            "Standardized Preprocessed External": false,
+            "Standardized Preprocessed Augmented": false,
+            "Standardized External": false,
+            "Standardized Augmented": false,
+            "Normalized Preprocessed External": false,
+            "Normalized Preprocessed Augmented": false,
+            "Normalized External": false,
+            "Normalized Augmented": false
+        }
+    },
+    "Friedman Test": {
+        "N": 3,
+        "chi2": 9.444444444444443,
+        "df": 7,
+        "asymp_sig": 0.22230125440769943,
+        "significant": false
+    }
+}

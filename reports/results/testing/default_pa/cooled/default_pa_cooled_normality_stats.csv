@@ -1,0 +1,73 @@
+model,trial,test,statistic,p/critical value,normal
+Standardized Preprocessed External,1,Shapiro-Wilk Test,0.9497887618859737,0.7385708568185639,True
+Standardized Preprocessed External,1,D'Agostino's K^2 Test,,,False
+Standardized Preprocessed External,1,Anderson-Darling Test,0.21195187718313413,0.809,True
+Standardized Preprocessed External,2,Shapiro-Wilk Test,0.8957286503554781,0.3492981440184334,True
+Standardized Preprocessed External,2,D'Agostino's K^2 Test,,,False
+Standardized Preprocessed External,2,Anderson-Darling Test,0.33445451920578506,0.809,True
+Standardized Preprocessed External,3,Shapiro-Wilk Test,0.9170602833251631,0.4844441943207572,True
+Standardized Preprocessed External,3,D'Agostino's K^2 Test,,,False
+Standardized Preprocessed External,3,Anderson-Darling Test,0.29023084014287104,0.809,True
+Standardized Preprocessed Augmented,1,Shapiro-Wilk Test,0.9497887618859737,0.7385708568185639,True
+Standardized Preprocessed Augmented,1,D'Agostino's K^2 Test,,,False
+Standardized Preprocessed Augmented,1,Anderson-Darling Test,0.21195187718313413,0.809,True
+Standardized Preprocessed Augmented,2,Shapiro-Wilk Test,0.9068946199349648,0.4162837531781549,True
+Standardized Preprocessed Augmented,2,D'Agostino's K^2 Test,,,False
+Standardized Preprocessed Augmented,2,Anderson-Darling Test,0.330097586377196,0.809,True
+Standardized Preprocessed Augmented,3,Shapiro-Wilk Test,0.9170602833251631,0.4844441943207572,True
+Standardized Preprocessed Augmented,3,D'Agostino's K^2 Test,,,False
+Standardized Preprocessed Augmented,3,Anderson-Darling Test,0.29023084014287104,0.809,True
+Standardized External,1,Shapiro-Wilk Test,0.9613909166199693,0.8303939670858094,True
+Standardized External,1,D'Agostino's K^2 Test,,,False
+Standardized External,1,Anderson-Darling Test,0.1736862258723253,0.809,True
+Standardized External,2,Shapiro-Wilk Test,0.8893281561675002,0.3146825642707305,True
+Standardized External,2,D'Agostino's K^2 Test,,,False
+Standardized External,2,Anderson-Darling Test,0.3617634322652412,0.809,True
+Standardized External,3,Shapiro-Wilk Test,0.9174687023655966,0.48731914285686456,True
+Standardized External,3,D'Agostino's K^2 Test,,,False
+Standardized External,3,Anderson-Darling Test,0.2791025185352485,0.809,True
+Standardized Augmented,1,Shapiro-Wilk Test,0.9320565828231706,0.5960750224056399,True
+Standardized Augmented,1,D'Agostino's K^2 Test,,,False
+Standardized Augmented,1,Anderson-Darling Test,0.28221590115029294,0.809,True
+Standardized Augmented,2,Shapiro-Wilk Test,0.9159522115928892,0.47669567750656316,True
+Standardized Augmented,2,D'Agostino's K^2 Test,,,False
+Standardized Augmented,2,Anderson-Darling Test,0.30439419619226893,0.809,True
+Standardized Augmented,3,Shapiro-Wilk Test,0.9575838655014588,0.800939460194535,True
+Standardized Augmented,3,D'Agostino's K^2 Test,,,False
+Standardized Augmented,3,Anderson-Darling Test,0.21929424721795954,0.809,True
+Normalized Preprocessed External,1,Shapiro-Wilk Test,0.9196805611789172,0.5030632240210948,True
+Normalized Preprocessed External,1,D'Agostino's K^2 Test,,,False
+Normalized Preprocessed External,1,Anderson-Darling Test,0.2601222106267933,0.809,True
+Normalized Preprocessed External,2,Shapiro-Wilk Test,0.9270260072409588,0.5573388542834543,True
+Normalized Preprocessed External,2,D'Agostino's K^2 Test,,,False
+Normalized Preprocessed External,2,Anderson-Darling Test,0.2833525253632443,0.809,True
+Normalized Preprocessed External,3,Shapiro-Wilk Test,0.9174686172605919,0.487318542728074,True
+Normalized Preprocessed External,3,D'Agostino's K^2 Test,,,False
+Normalized Preprocessed External,3,Anderson-Darling Test,0.27910278442832226,0.809,True
+Normalized Preprocessed Augmented,1,Shapiro-Wilk Test,0.9243661613279771,0.5373486008484205,True
+Normalized Preprocessed Augmented,1,D'Agostino's K^2 Test,,,False
+Normalized Preprocessed Augmented,1,Anderson-Darling Test,0.24455629613618335,0.809,True
+Normalized Preprocessed Augmented,2,Shapiro-Wilk Test,0.9635362934197714,0.84653649742557,True
+Normalized Preprocessed Augmented,2,D'Agostino's K^2 Test,,,False
+Normalized Preprocessed Augmented,2,Anderson-Darling Test,0.18151025549818556,0.809,True
+Normalized Preprocessed Augmented,3,Shapiro-Wilk Test,0.8511471495877055,0.16079893112452792,True
+Normalized Preprocessed Augmented,3,D'Agostino's K^2 Test,,,False
+Normalized Preprocessed Augmented,3,Anderson-Darling Test,0.40293524221681576,0.809,True
+Normalized External,1,Shapiro-Wilk Test,0.963535596083681,0.8465313130820462,True
+Normalized External,1,D'Agostino's K^2 Test,,,False
+Normalized External,1,Anderson-Darling Test,0.17244583212944953,0.809,True
+Normalized External,2,Shapiro-Wilk Test,0.8902178061410996,0.3193305881752437,True
+Normalized External,2,D'Agostino's K^2 Test,,,False
+Normalized External,2,Anderson-Darling Test,0.31912879778158754,0.809,True
+Normalized External,3,Shapiro-Wilk Test,0.9653378618234975,0.8597802001005308,True
+Normalized External,3,D'Agostino's K^2 Test,,,False
+Normalized External,3,Anderson-Darling Test,0.173228123649233,0.809,True
+Normalized Augmented,1,Shapiro-Wilk Test,0.9635370906706457,0.8465424245326384,True
+Normalized Augmented,1,D'Agostino's K^2 Test,,,False
+Normalized Augmented,1,Anderson-Darling Test,0.1724431273341347,0.809,True
+Normalized Augmented,2,Shapiro-Wilk Test,0.917468759461846,0.4873195454785929,True
+Normalized Augmented,2,D'Agostino's K^2 Test,,,False
+Normalized Augmented,2,Anderson-Darling Test,0.27910237167288265,0.809,True
+Normalized Augmented,3,Shapiro-Wilk Test,0.9287502534907319,0.570485846615559,True
+Normalized Augmented,3,D'Agostino's K^2 Test,,,False
+Normalized Augmented,3,Anderson-Darling Test,0.28802517360881197,0.809,True
