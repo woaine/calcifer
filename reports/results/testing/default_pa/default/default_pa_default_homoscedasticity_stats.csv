@@ -1,0 +1,73 @@
+model,trial,test,statistic,p-value,homoscedastic
+Standardized Preprocessed External,1,Breusch-Pagan Test,4.1299576169448455,0.12682097806977305,True
+Standardized Preprocessed External,1,White's Test,6.0,0.30621891841327875,True
+Standardized Preprocessed External,1,Goldfeld-Quandt Test,,,True
+Standardized Preprocessed External,2,Breusch-Pagan Test,0.33725143234333377,0.8448250485717795,True
+Standardized Preprocessed External,2,White's Test,1.2212257119560437,0.7479181400201136,True
+Standardized Preprocessed External,2,Goldfeld-Quandt Test,,,True
+Standardized Preprocessed External,3,Breusch-Pagan Test,0.400010364156413,0.5270839044331008,True
+Standardized Preprocessed External,3,White's Test,0.49227144743657214,0.7818161067352405,True
+Standardized Preprocessed External,3,Goldfeld-Quandt Test,2.308374585011686,0.3705804979975571,True
+Standardized Preprocessed Augmented,1,Breusch-Pagan Test,1.9704330290311023,0.3733583806758632,True
+Standardized Preprocessed Augmented,1,White's Test,5.999999999999993,0.30621891841327903,True
+Standardized Preprocessed Augmented,1,Goldfeld-Quandt Test,,,True
+Standardized Preprocessed Augmented,2,Breusch-Pagan Test,0.31354029494761204,0.8549005372844235,True
+Standardized Preprocessed Augmented,2,White's Test,1.734181301993264,0.6293614380025674,True
+Standardized Preprocessed Augmented,2,Goldfeld-Quandt Test,,,True
+Standardized Preprocessed Augmented,3,Breusch-Pagan Test,1.4112991330389442,0.23484084946059625,True
+Standardized Preprocessed Augmented,3,White's Test,1.6069006422001626,0.44778130640484914,True
+Standardized Preprocessed Augmented,3,Goldfeld-Quandt Test,3.087323023105338,0.3293928891304305,True
+Standardized External,1,Breusch-Pagan Test,2.939912579102848,0.2299355355524718,True
+Standardized External,1,White's Test,5.9999999999999964,0.3062189184132784,True
+Standardized External,1,Goldfeld-Quandt Test,,,True
+Standardized External,2,Breusch-Pagan Test,0.22752500350797167,0.8924698907480059,True
+Standardized External,2,White's Test,1.6613547925431043,0.6455594043651514,True
+Standardized External,2,Goldfeld-Quandt Test,,,True
+Standardized External,3,Breusch-Pagan Test,0.2899516438798746,0.5902515196747371,True
+Standardized External,3,White's Test,0.29483451704605557,0.8629338357876711,True
+Standardized External,3,Goldfeld-Quandt Test,3.0873230231053377,0.3293928891304305,True
+Standardized Augmented,1,Breusch-Pagan Test,1.2364493341050649,0.5389003163290867,True
+Standardized Augmented,1,White's Test,5.999999999999992,0.3062189184132797,True
+Standardized Augmented,1,Goldfeld-Quandt Test,,,True
+Standardized Augmented,2,Breusch-Pagan Test,0.42698007579394925,0.8077602071008835,True
+Standardized Augmented,2,White's Test,2.0237207593164204,0.5674979984051385,True
+Standardized Augmented,2,Goldfeld-Quandt Test,,,True
+Standardized Augmented,3,Breusch-Pagan Test,2.0538203479745807,0.15182480149222533,True
+Standardized Augmented,3,White's Test,2.357625528625235,0.30764376753038175,True
+Standardized Augmented,3,Goldfeld-Quandt Test,3.56879818726154,0.30993659346577074,True
+Normalized Preprocessed External,1,Breusch-Pagan Test,1.9504244060604916,0.3771123206946543,True
+Normalized Preprocessed External,1,White's Test,5.999999999999994,0.30621891841327903,True
+Normalized Preprocessed External,1,Goldfeld-Quandt Test,,,True
+Normalized Preprocessed External,2,Breusch-Pagan Test,0.3439890271515269,0.8419837926361144,True
+Normalized Preprocessed External,2,White's Test,1.642967266184961,0.6496869935854459,True
+Normalized Preprocessed External,2,Goldfeld-Quandt Test,,,True
+Normalized Preprocessed External,3,Breusch-Pagan Test,1.4112991330389442,0.23484084946059625,True
+Normalized Preprocessed External,3,White's Test,1.6069006422001626,0.44778130640484914,True
+Normalized Preprocessed External,3,Goldfeld-Quandt Test,3.087323023105338,0.3293928891304305,True
+Normalized Preprocessed Augmented,1,Breusch-Pagan Test,4.690278659907414,0.0958338486745527,True
+Normalized Preprocessed Augmented,1,White's Test,6.0,0.30621891841327875,True
+Normalized Preprocessed Augmented,1,Goldfeld-Quandt Test,,,True
+Normalized Preprocessed Augmented,2,Breusch-Pagan Test,0.7280672292995471,0.6948678366113585,True
+Normalized Preprocessed Augmented,2,White's Test,1.2373504311602401,0.7440607723944476,True
+Normalized Preprocessed Augmented,2,Goldfeld-Quandt Test,,,True
+Normalized Preprocessed Augmented,3,Breusch-Pagan Test,1.3112034915948068,0.2521768722318088,True
+Normalized Preprocessed Augmented,3,White's Test,1.3168234418897742,0.5176728908985897,True
+Normalized Preprocessed Augmented,3,Goldfeld-Quandt Test,2.640705007104368,0.35119016471846953,True
+Normalized External,1,Breusch-Pagan Test,4.177697710827791,0.12382959957668248,True
+Normalized External,1,White's Test,6.0,0.30621891841327875,True
+Normalized External,1,Goldfeld-Quandt Test,,,True
+Normalized External,2,Breusch-Pagan Test,0.37279351194832167,0.8299442443131788,True
+Normalized External,2,White's Test,1.3653928807539208,0.7136664989738255,True
+Normalized External,2,Goldfeld-Quandt Test,,,True
+Normalized External,3,Breusch-Pagan Test,0.3613614825268612,0.5477510735810083,True
+Normalized External,3,White's Test,0.5920284747722275,0.743776838506764,True
+Normalized External,3,Goldfeld-Quandt Test,3.0873230231053377,0.3293928891304305,True
+Normalized Augmented,1,Breusch-Pagan Test,4.690278659907414,0.0958338486745527,True
+Normalized Augmented,1,White's Test,6.0,0.30621891841327875,True
+Normalized Augmented,1,Goldfeld-Quandt Test,,,True
+Normalized Augmented,2,Breusch-Pagan Test,0.15583188188799046,0.9250421814480286,True
+Normalized Augmented,2,White's Test,1.5188070633611332,0.6779365220101914,True
+Normalized Augmented,2,Goldfeld-Quandt Test,,,True
+Normalized Augmented,3,Breusch-Pagan Test,0.3613614825268612,0.5477510735810083,True
+Normalized Augmented,3,White's Test,0.5920284747722275,0.743776838506764,True
+Normalized Augmented,3,Goldfeld-Quandt Test,3.0873230231053377,0.3293928891304305,True

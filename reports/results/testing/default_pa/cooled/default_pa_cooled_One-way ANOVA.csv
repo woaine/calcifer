@@ -1,0 +1,12 @@
+stats,values
+f_statistic,2.190895205923489
+p-value,0.038721350388204116
+significant,True
+df_between,7
+df_within,136
+total_df,143
+ss_between,2.042141610285903
+ss_within,18.10944404617184
+total_ss,20.151585656457744
+ms_between,0.29173451575512904
+ms_within,0.13315767681008706
